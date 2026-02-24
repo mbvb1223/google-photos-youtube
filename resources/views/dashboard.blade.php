@@ -57,6 +57,42 @@
                 </div>
             </div>
 
+            {{-- YouTube Connection --}}
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">YouTube</h3>
+
+                    @if ($youtubeAccount)
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">{{ $youtubeAccount->name }}</p>
+                                    <p class="text-sm text-gray-500">{{ $youtubeAccount->email }}</p>
+                                </div>
+                            </div>
+                            <form method="POST" action="{{ route('google.disconnect', 'youtube') }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-sm text-red-600 hover:text-red-800 underline">
+                                    Disconnect
+                                </button>
+                            </form>
+                        </div>
+                    @else
+                        <p class="text-sm text-gray-500 mb-4">Connect your YouTube account to upload videos.</p>
+                        <a href="{{ route('google.connect.youtube') }}"
+                           class="inline-flex items-center px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition">
+                            Connect YouTube
+                        </a>
+                    @endif
+                </div>
+            </div>
+
             {{-- Video Selection --}}
             @if ($photosAccount)
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg" x-data="pickerFlow">
