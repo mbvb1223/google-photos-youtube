@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class GooglePhotosPickerService
 {
-    private const BASE_URL = 'https://photospicker.googleapis.com/v1';
+    private const string BASE_URL = 'https://photospicker.googleapis.com/v1';
 
     public function __construct(
         private GoogleAuthService $authService,
@@ -24,7 +24,8 @@ class GooglePhotosPickerService
     public function createSession(ConnectedAccount $account): array
     {
         $response = Http::withToken($this->getToken($account))
-            ->post(self::BASE_URL.'/sessions', []);
+            ->withBody('')
+            ->post(self::BASE_URL.'/sessions');
 
         $response->throw();
 
