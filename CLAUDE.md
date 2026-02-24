@@ -53,6 +53,12 @@ composer test
 - **YouTube Data API v3** — For uploading videos
 - **Google OAuth2** — Via Laravel Socialite
 
+## API Documentation
+
+Reference docs in `docs/` before making any API-related changes or debugging API issues. These contain the authoritative endpoint URLs, parameters, and response formats.
+
+- `docs/google-photos-picker-api/` — Google Photos Picker API (sessions, mediaItems)
+
 ## Environment Variables
 
 ```

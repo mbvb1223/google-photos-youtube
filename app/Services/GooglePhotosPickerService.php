@@ -51,13 +51,13 @@ class GooglePhotosPickerService
 
     public function listMediaItems(ConnectedAccount $account, string $sessionId, ?string $pageToken = null): array
     {
-        $query = [];
+        $query = ['sessionId' => $sessionId];
         if ($pageToken) {
             $query['pageToken'] = $pageToken;
         }
 
         $response = Http::withToken($this->getToken($account))
-            ->get(self::BASE_URL."/sessions/{$sessionId}/mediaItems", $query);
+            ->get(self::BASE_URL.'/mediaItems', $query);
 
         $response->throw();
 
