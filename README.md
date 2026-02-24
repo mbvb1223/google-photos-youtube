@@ -1,59 +1,77 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Google Photos → YouTube Transfer Tool
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A Laravel 12 web app that downloads videos from Google Photos and uploads them to YouTube.
 
-## About Laravel
+## Requirements
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- PHP 8.2+
+- MySQL
+- Node.js & npm
+- Composer
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Setup
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```bash
+composer setup
+```
 
-## Learning Laravel
+## Google OAuth Credentials
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+You need a Google OAuth client to allow users to connect their Google Photos and YouTube accounts.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 1. Create a Google Cloud project
 
-## Laravel Sponsors
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Click **Select a project** → **New Project**
+3. Give it a name and click **Create**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 2. Enable APIs
 
-### Premium Partners
+In your project, go to **APIs & Services → Library** and enable:
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- **Photos Picker API**
+- **YouTube Data API v3**
 
-## Contributing
+### 3. Configure OAuth consent screen
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. Go to **APIs & Services → OAuth consent screen**
+2. Fill in the app name, user support email, and developer contact email
+3. Click **Save and Continue** through each step
+4. Under **Audience**, make sure the publishing status is set (it starts in "Testing" by default)
+5. Add your Google account(s) as **test users** (required while in "Testing" status)
 
-## Code of Conduct
+### 4. Create OAuth credentials
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+1. Go to **APIs & Services → Credentials**
+2. Click **Create Credentials → OAuth client ID**
+3. Application type: **Web application**
+4. Add an **Authorized redirect URI**: `http://localhost:8000/auth/google/callback` (or your `APP_URL` + `/auth/google/callback`)
+5. Click **Create**
+6. Copy the **Client ID** and **Client Secret**
 
-## Security Vulnerabilities
+### 5. Update `.env`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```env
+GOOGLE_CLIENT_ID=your-client-id-here
+GOOGLE_CLIENT_SECRET=your-client-secret-here
+GOOGLE_REDIRECT_URI=${APP_URL}/auth/google/callback
+```
 
-## License
+## Development
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+# Run dev server (app + queue + logs + vite)
+composer dev
+
+# Run tests
+composer test
+```
+
+## Commands
+
+- `php artisan serve` — Start the web server
+- `php artisan queue:listen` — Process queue jobs
+- `php artisan migrate` — Run database migrations
+- `php artisan test` — Run PestPHP tests
+- `npm run dev` — Start Vite dev server
+- `npm run build` — Build frontend assets
