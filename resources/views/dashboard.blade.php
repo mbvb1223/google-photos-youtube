@@ -257,6 +257,113 @@
                 </div>
             @endif
 
+            {{-- Transfer History --}}
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg" x-data="transferHistory">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-medium text-gray-900">Transfer History</h3>
+                        <template x-if="hasActiveTransfers">
+                            <span class="inline-flex items-center gap-1.5 text-xs text-blue-600">
+                                <svg class="animate-spin h-3 w-3" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                                </svg>
+                                Auto-refreshing
+                            </span>
+                        </template>
+                    </div>
+
+                    {{-- Empty state --}}
+                    <template x-if="transfers.length === 0">
+                        <div class="text-center py-8 text-gray-400">
+                            <svg class="mx-auto h-10 w-10 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                            </svg>
+                            <p class="text-sm">No transfers yet.</p>
+                        </div>
+                    </template>
+
+                    {{-- Transfer table --}}
+                    <template x-if="transfers.length > 0">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead>
+                                    <tr>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Title</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">YouTube</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                                        <th class="px-4 py-2"></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100">
+                                    <template x-for="transfer in transfers" :key="transfer.id">
+                                        <tr>
+                                            {{-- Title --}}
+                                            <td class="px-4 py-3">
+                                                <p class="text-sm font-medium text-gray-900 truncate max-w-xs" x-text="transfer.title"></p>
+                                                <p class="text-xs text-gray-400" x-text="transfer.filename"></p>
+                                            </td>
+
+                                            {{-- Status badge --}}
+                                            <td class="px-4 py-3">
+                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium"
+                                                      :class="statusClass(transfer.status)">
+                                                    <template x-if="transfer.status === 'processing'">
+                                                        <svg class="animate-spin h-3 w-3" fill="none" viewBox="0 0 24 24">
+                                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                                                        </svg>
+                                                    </template>
+                                                    <span x-text="statusLabel(transfer.status)"></span>
+                                                </span>
+                                                {{-- Error message --}}
+                                                <template x-if="transfer.status === 'failed' && transfer.error_message">
+                                                    <p class="text-xs text-red-500 mt-1 max-w-xs truncate" :title="transfer.error_message" x-text="transfer.error_message"></p>
+                                                </template>
+                                            </td>
+
+                                            {{-- YouTube link --}}
+                                            <td class="px-4 py-3">
+                                                <template x-if="transfer.youtube_video_id">
+                                                    <a :href="'https://www.youtube.com/watch?v=' + transfer.youtube_video_id"
+                                                       target="_blank" rel="noopener"
+                                                       class="inline-flex items-center gap-1 text-sm text-red-600 hover:text-red-800 underline">
+                                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/>
+                                                            <path fill="white" d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                                                        </svg>
+                                                        Watch
+                                                    </a>
+                                                </template>
+                                                <template x-if="!transfer.youtube_video_id">
+                                                    <span class="text-xs text-gray-400">&mdash;</span>
+                                                </template>
+                                            </td>
+
+                                            {{-- Date --}}
+                                            <td class="px-4 py-3 text-xs text-gray-500 whitespace-nowrap"
+                                                x-text="transfer.completed_at ? new Date(transfer.completed_at).toLocaleString() : new Date(transfer.created_at).toLocaleString()">
+                                            </td>
+
+                                            {{-- Actions --}}
+                                            <td class="px-4 py-3 text-right">
+                                                <template x-if="transfer.status === 'pending'">
+                                                    <button @click="cancelTransfer(transfer.id)"
+                                                            class="text-xs text-red-600 hover:text-red-800 underline">
+                                                        Cancel
+                                                    </button>
+                                                </template>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
         </div>
     </div>
 </x-app-layout>

@@ -196,6 +196,7 @@ Alpine.data('pickerFlow', () => ({
             const transfers = await response.json();
             this.transferSuccess = `${transfers.length} video(s) queued for transfer to YouTube.`;
             this.mediaItems = [];
+            window.dispatchEvent(new CustomEvent('transfers-updated'));
         } catch (e) {
             this.transferError = e.message || 'Failed to start transfer.';
         } finally {
@@ -220,6 +221,84 @@ Alpine.data('pickerFlow', () => ({
 
     destroy() {
         this.stopPolling();
+    },
+}));
+
+Alpine.data('transferHistory', () => ({
+    transfers: [],
+    pollTimer: null,
+
+    init() {
+        this.fetchTransfers();
+        window.addEventListener('transfers-updated', () => this.fetchTransfers());
+    },
+
+    get hasActiveTransfers() {
+        return this.transfers.some(t => t.status === 'pending' || t.status === 'processing');
+    },
+
+    async fetchTransfers() {
+        try {
+            const response = await fetch('/transfers', {
+                headers: { 'Accept': 'application/json' },
+            });
+
+            if (response.ok) {
+                this.transfers = await response.json();
+            }
+        } catch {
+            // Silently fail on poll errors
+        }
+
+        this.managePoll();
+    },
+
+    managePoll() {
+        if (this.hasActiveTransfers && !this.pollTimer) {
+            this.pollTimer = setInterval(() => this.fetchTransfers(), 5000);
+        } else if (!this.hasActiveTransfers && this.pollTimer) {
+            clearInterval(this.pollTimer);
+            this.pollTimer = null;
+        }
+    },
+
+    async cancelTransfer(id) {
+        try {
+            const response = await fetch(`/transfers/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                await this.fetchTransfers();
+            }
+        } catch {
+            // Ignore
+        }
+    },
+
+    statusLabel(status) {
+        return { pending: 'Pending', processing: 'Processing', completed: 'Completed', failed: 'Failed', cancelled: 'Cancelled' }[status] || status;
+    },
+
+    statusClass(status) {
+        return {
+            pending: 'bg-yellow-100 text-yellow-800',
+            processing: 'bg-blue-100 text-blue-800',
+            completed: 'bg-green-100 text-green-800',
+            failed: 'bg-red-100 text-red-800',
+            cancelled: 'bg-gray-100 text-gray-600',
+        }[status] || 'bg-gray-100 text-gray-600';
+    },
+
+    destroy() {
+        if (this.pollTimer) {
+            clearInterval(this.pollTimer);
+            this.pollTimer = null;
+        }
     },
 }));
 
