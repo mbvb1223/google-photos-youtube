@@ -60,3 +60,7 @@ GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
 GOOGLE_REDIRECT_URI=${APP_URL}/auth/google/callback
 ```
+
+## Project Plan
+
+Always refer to `PLAN.md` for the implementation roadmap, current progress, and next steps. Check which phases/steps are completed (~~strikethrough~~) and which are pending before starting any work.

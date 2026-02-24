@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Services\GooglePhotosPickerService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use RuntimeException;
 
 class PickerSessionController extends Controller
 {
@@ -22,7 +23,11 @@ class PickerSessionController extends Controller
             return response()->json(['error' => 'Google Photos account not connected.'], 403);
         }
 
-        $session = $this->pickerService->createSession($account);
+        try {
+            $session = $this->pickerService->createSession($account);
+        } catch (RuntimeException $e) {
+            return response()->json(['error' => $e->getMessage()], 401);
+        }
 
         return response()->json($session);
     }

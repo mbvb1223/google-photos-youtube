@@ -27,6 +27,9 @@ class GoogleConnectController extends Controller
     public function connectPhotos(Request $request): RedirectResponse
     {
         $client = $this->getClient();
+        $client->addScope('openid');
+        $client->addScope('email');
+        $client->addScope('profile');
         $client->addScope('https://www.googleapis.com/auth/photospicker.mediaitems.readonly');
 
         $request->session()->put('google_auth_type', 'photos');
@@ -37,6 +40,9 @@ class GoogleConnectController extends Controller
     public function connectYoutube(Request $request): RedirectResponse
     {
         $client = $this->getClient();
+        $client->addScope('openid');
+        $client->addScope('email');
+        $client->addScope('profile');
         $client->addScope('https://www.googleapis.com/auth/youtube.upload');
 
         $request->session()->put('google_auth_type', 'youtube');

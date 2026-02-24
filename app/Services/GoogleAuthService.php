@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Models\ConnectedAccount;
 use Google\Client as GoogleClient;
+use RuntimeException;
 
 class GoogleAuthService
 {
@@ -25,18 +26,26 @@ class GoogleAuthService
             'created' => time(),
         ]);
 
-        if ($client->isAccessTokenExpired() && $token['refresh_token']) {
-            $newToken = $client->fetchAccessTokenWithRefreshToken($token['refresh_token']);
+        if ($client->isAccessTokenExpired()) {
+            $refreshToken = $token['refresh_token'] ?? null;
 
-            if (! isset($newToken['error'])) {
-                $account->update([
-                    'token' => [
-                        'access_token' => $newToken['access_token'],
-                        'refresh_token' => $newToken['refresh_token'] ?? $token['refresh_token'],
-                        'expires_at' => time() + ($newToken['expires_in'] ?? 3600),
-                    ],
-                ]);
+            if (! $refreshToken) {
+                throw new RuntimeException('Google token expired and no refresh token available. Please reconnect your account.');
             }
+
+            $newToken = $client->fetchAccessTokenWithRefreshToken($refreshToken);
+
+            if (isset($newToken['error'])) {
+                throw new RuntimeException('Failed to refresh Google token: '.($newToken['error_description'] ?? $newToken['error']).'. Please reconnect your account.');
+            }
+
+            $account->update([
+                'token' => [
+                    'access_token' => $newToken['access_token'],
+                    'refresh_token' => $newToken['refresh_token'] ?? $refreshToken,
+                    'expires_at' => time() + ($newToken['expires_in'] ?? 3600),
+                ],
+            ]);
         }
 
         return $client;
