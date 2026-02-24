@@ -98,10 +98,10 @@
                             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                                 <template x-for="item in mediaItems" :key="item.id">
                                     <div class="group relative bg-gray-50 rounded-lg overflow-hidden">
-                                        <div class="aspect-square">
+                                        <div class="aspect-video bg-black">
                                             <img :src="'/picker/thumbnail?url=' + encodeURIComponent(item.mediaFile?.baseUrl)"
                                                  :alt="item.mediaFile?.filename || 'Video'"
-                                                 class="w-full h-full object-cover"
+                                                 class="w-full h-full object-contain"
                                                  loading="lazy">
                                         </div>
                                         <div class="p-2">
