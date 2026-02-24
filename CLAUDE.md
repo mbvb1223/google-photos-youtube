@@ -58,6 +58,7 @@ composer test
 Reference docs in `docs/` before making any API-related changes or debugging API issues. These contain the authoritative endpoint URLs, parameters, and response formats.
 
 - `.claude/docs/google-photos-picker-api/` — Google Photos Picker API (sessions, mediaItems)
+- `.claude/docs/youtube-data-api/` — YouTube Data API v3 (videos, channels, playlists, playlistItems, search, captions, thumbnails, resumable uploads)
 
 ## Environment Variables
 
