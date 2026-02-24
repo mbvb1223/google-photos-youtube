@@ -242,10 +242,21 @@
                                 </template>
                             </div>
 
-                            {{-- Transfer button --}}
+                            {{-- Transfer buttons --}}
                             <div class="mt-6 flex items-center justify-end gap-3">
-                                <span class="text-sm text-gray-500" x-text="selectedCount + ' video(s) will be transferred'"></span>
+                                <span class="text-sm text-gray-500" x-text="selectedCount + ' video(s) selected'"></span>
                                 @if ($youtubeAccount)
+                                    <button @click="submitMergeTransfer()"
+                                            :disabled="transferring || selectedCount < 2"
+                                            class="inline-flex items-center px-5 py-2.5 bg-purple-600 text-white text-sm font-medium rounded-lg hover:bg-purple-700 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                                        <template x-if="transferring">
+                                            <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                                            </svg>
+                                        </template>
+                                        Merge & Transfer
+                                    </button>
                                     <button @click="submitTransfers()"
                                             :disabled="transferring || selectedCount === 0"
                                             class="inline-flex items-center px-5 py-2.5 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition disabled:opacity-50 disabled:cursor-not-allowed">

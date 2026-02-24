@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
     // Transfers
     Route::get('/transfers', [TransferController::class, 'index'])->name('transfers.index');
     Route::post('/transfers', [TransferController::class, 'store'])->name('transfers.store');
+    Route::post('/transfers/merge', [TransferController::class, 'merge'])->name('transfers.merge');
     Route::get('/transfers/{transfer}', [TransferController::class, 'show'])->name('transfers.show');
     Route::delete('/transfers/{transfer}', [TransferController::class, 'destroy'])->name('transfers.destroy');
 });

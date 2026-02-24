@@ -18,6 +18,7 @@ class Transfer extends Model
         'google_photos_base_url',
         'filename',
         'mime_type',
+        'merge_sources',
         'title',
         'description',
         'privacy_status',
@@ -33,6 +34,7 @@ class Transfer extends Model
     protected function casts(): array
     {
         return [
+            'merge_sources' => 'array',
             'file_size' => 'integer',
             'started_at' => 'datetime',
             'completed_at' => 'datetime',

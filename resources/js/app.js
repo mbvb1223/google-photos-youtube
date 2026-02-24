@@ -228,6 +228,57 @@ Alpine.data('pickerFlow', () => ({
         }
     },
 
+    async submitMergeTransfer() {
+        this.transferError = null;
+        this.transferSuccess = null;
+
+        if (this.selectedCount < 2) {
+            this.transferError = 'Please select at least 2 videos to merge.';
+            return;
+        }
+
+        this.transferring = true;
+
+        try {
+            const firstItem = this.selectedItems[0];
+            const videos = this.selectedItems.map(item => ({
+                media_id: item.id,
+                base_url: item.mediaFile?.baseUrl,
+                filename: item.mediaFile?.filename || 'video',
+                mime_type: item.mediaFile?.mimeType || 'video/mp4',
+            }));
+
+            const response = await fetch('/transfers/merge', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({
+                    videos,
+                    title: firstItem._title,
+                    description: firstItem._description || null,
+                    privacy_status: firstItem._privacy,
+                    playlist_id: this.selectedPlaylist || null,
+                }),
+            });
+
+            if (!response.ok) {
+                const data = await response.json().catch(() => ({}));
+                throw new Error(data.error || data.message || `Merge transfer failed (${response.status})`);
+            }
+
+            this.transferSuccess = `Merge transfer queued — ${videos.length} videos will be merged and uploaded.`;
+            this.mediaItems = [];
+            window.dispatchEvent(new CustomEvent('transfers-updated'));
+        } catch (e) {
+            this.transferError = e.message || 'Failed to start merge transfer.';
+        } finally {
+            this.transferring = false;
+        }
+    },
+
     async cleanupSession() {
         try {
             await fetch(`/picker/sessions/${this.sessionId}`, {

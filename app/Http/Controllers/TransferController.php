@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ProcessMergeTransferJob;
 use App\Jobs\ProcessTransferJob;
 use App\Models\Transfer;
 use Illuminate\Http\JsonResponse;
@@ -59,6 +60,51 @@ class TransferController extends Controller
         }
 
         return response()->json($transfers, 201);
+    }
+
+    public function merge(Request $request): JsonResponse
+    {
+        $user = $request->user();
+
+        if (! $user->photosAccount || ! $user->youtubeAccount) {
+            return response()->json(['error' => 'Both Google Photos and YouTube accounts must be connected.'], 403);
+        }
+
+        $validated = $request->validate([
+            'videos' => 'required|array|min:2',
+            'videos.*.media_id' => 'required|string',
+            'videos.*.base_url' => 'required|string',
+            'videos.*.filename' => 'required|string',
+            'videos.*.mime_type' => 'required|string',
+            'title' => 'required|string|max:100',
+            'description' => 'nullable|string|max:5000',
+            'privacy_status' => 'nullable|string|in:private,unlisted,public',
+            'playlist_id' => 'nullable|string',
+        ]);
+
+        $mergeSources = array_map(fn (array $video) => [
+            'media_id' => $video['media_id'],
+            'base_url' => $video['base_url'],
+            'filename' => $video['filename'],
+            'mime_type' => $video['mime_type'],
+        ], $validated['videos']);
+
+        $transfer = $user->transfers()->create([
+            'google_photos_media_id' => $validated['videos'][0]['media_id'],
+            'google_photos_base_url' => $validated['videos'][0]['base_url'],
+            'filename' => 'merged_'.count($validated['videos']).'_videos.mp4',
+            'mime_type' => 'video/mp4',
+            'merge_sources' => $mergeSources,
+            'title' => $validated['title'],
+            'description' => $validated['description'] ?? null,
+            'privacy_status' => $validated['privacy_status'] ?? 'private',
+            'youtube_playlist_id' => $validated['playlist_id'] ?? null,
+            'status' => 'pending',
+        ]);
+
+        ProcessMergeTransferJob::dispatch($transfer);
+
+        return response()->json($transfer, 201);
     }
 
     public function show(Request $request, Transfer $transfer): JsonResponse
