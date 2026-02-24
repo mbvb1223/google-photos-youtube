@@ -52,30 +52,28 @@ This is stored in a `connected_accounts` table:
     - ~~Uses session state (`session()->put('google_auth_type', 'photos')`) to distinguish callbacks~~
 11. ~~**Routes** — Connect routes: `/auth/google/photos`, `/auth/google/youtube`, `/auth/google/callback` (all require auth middleware)~~
 
-### Phase 3: Services
+### Phase 3: Services ✅
 
-12. **Create `app/Services/GoogleAuthService.php`** — Configure `Google\Client` from a `ConnectedAccount`'s token, handle token refresh, persist refreshed tokens
-13. **Create `app/Services/GooglePhotosPickerService.php`** — HTTP calls to `photospicker.googleapis.com/v1` using the user's **Photos** connected account token. Session CRUD, media item listing, video download (baseUrl + `=dv`, streamed to disk)
-14. **Create `app/Services/YouTubeUploadService.php`** — Resumable chunked upload (2MB chunks) via `google/apiclient` using the user's **YouTube** connected account token. `videos.insert()` with snippet + status metadata
+12. ~~**Create `app/Services/GoogleAuthService.php`** — Configure `Google\Client` from a `ConnectedAccount`'s token, handle token refresh, persist refreshed tokens~~
+13. ~~**Create `app/Services/GooglePhotosPickerService.php`** — HTTP calls to `photospicker.googleapis.com/v1` using the user's **Photos** connected account token. Session CRUD, media item listing, video download (baseUrl + `=dv`, streamed to disk)~~
+14. ~~**Create `app/Services/YouTubeUploadService.php`** — Resumable chunked upload (2MB chunks) via `google/apiclient` using the user's **YouTube** connected account token. `videos.insert()` with snippet + status metadata~~
 
-### Phase 4: Controllers & Job
+### Phase 4: Controllers & Job ✅
 
-15. **Create `app/Http/Controllers/PickerSessionController.php`** — Backend proxy for Picker API (create session, poll session, list media items). Requires Photos account connected.
-16. **Create `app/Http/Controllers/TransferController.php`** — CRUD: list user transfers, create transfers from selected videos (dispatches job per transfer), cancel pending transfers. Requires both accounts connected.
-17. **Create `app/Http/Controllers/DashboardController.php`** — Returns dashboard view with connected account status
-18. **Create `app/Jobs/ProcessTransferJob.php`** — Downloads video using Photos account token → uploads to YouTube using YouTube account token → updates transfer status → cleans up temp file. 1hr timeout, 2 tries.
-19. **Add all authenticated routes** — Picker proxy routes + transfer CRUD routes
+15. ~~**Create `app/Http/Controllers/PickerSessionController.php`** — Backend proxy for Picker API (create session, poll session, list media items). Requires Photos account connected.~~
+16. ~~**Create `app/Http/Controllers/TransferController.php`** — CRUD: list user transfers, create transfers from selected videos (dispatches job per transfer), cancel pending transfers. Requires both accounts connected.~~
+17. ~~**Create `app/Http/Controllers/DashboardController.php`** — Returns dashboard view with connected account status~~
+18. ~~**Create `app/Jobs/ProcessTransferJob.php`** — Downloads video using Photos account token → uploads to YouTube using YouTube account token → updates transfer status → cleans up temp file. 1hr timeout, 2 tries.~~
+19. ~~**Add all authenticated routes** — Picker proxy routes + transfer CRUD routes~~
 
-### Phase 5: Frontend
+### Phase 5: Frontend (in progress)
 
 20. **Update Breeze layout** — Extend `resources/views/layouts/app.blade.php` with any app-specific nav items
 21. **Replace `resources/views/welcome.blade.php`** — Landing page with login/register links
-22. **Create `resources/views/dashboard.blade.php`** — Main dashboard with:
-    - **Account connections section** — "Connect Google Photos" and "Connect YouTube" buttons, showing connected account email when linked (with disconnect option)
-    - **Video selection area** — "Select Videos" button (disabled until Photos account connected)
-    - **Transfer config form** — Title, description, privacy per video (disabled until YouTube account connected)
-    - **Transfer history table** — Status, progress, YouTube links
-23. **Update `resources/js/app.js`** — Picker popup flow + transfer status polling
+22. ~~**Update `resources/views/dashboard.blade.php`** — Google Photos connection card (connect/disconnect), video selection card with Alpine.js `pickerFlow` component, responsive video grid with thumbnails, flash messages~~
+23. ~~**Update `resources/js/app.js`** — Alpine.js `pickerFlow` component: create picker session, open popup, poll for completion, fetch media items with pagination, cleanup session, error handling~~
+24. **Transfer config form** — Title, description, privacy per video (disabled until YouTube account connected)
+25. **Transfer history table** — Status, progress, YouTube links
 
 ### Phase 6: Tests
 
