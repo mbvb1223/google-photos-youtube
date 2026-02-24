@@ -16,14 +16,14 @@ class GooglePhotosPickerService
         private GoogleAuthService $authService,
     ) {}
 
-    private function getToken(ConnectedAccount $account): string
+    public function getAccessToken(ConnectedAccount $account): string
     {
         return $this->authService->getAccessToken($account);
     }
 
     public function createSession(ConnectedAccount $account): array
     {
-        $response = Http::withToken($this->getToken($account))
+        $response = Http::withToken($this->getAccessToken($account))
             ->withBody('')
             ->post(self::BASE_URL.'/sessions');
 
@@ -34,7 +34,7 @@ class GooglePhotosPickerService
 
     public function getSession(ConnectedAccount $account, string $sessionId): array
     {
-        $response = Http::withToken($this->getToken($account))
+        $response = Http::withToken($this->getAccessToken($account))
             ->get(self::BASE_URL."/sessions/{$sessionId}");
 
         $response->throw();
@@ -44,7 +44,7 @@ class GooglePhotosPickerService
 
     public function deleteSession(ConnectedAccount $account, string $sessionId): void
     {
-        Http::withToken($this->getToken($account))
+        Http::withToken($this->getAccessToken($account))
             ->delete(self::BASE_URL."/sessions/{$sessionId}")
             ->throw();
     }
@@ -56,7 +56,7 @@ class GooglePhotosPickerService
             $query['pageToken'] = $pageToken;
         }
 
-        $response = Http::withToken($this->getToken($account))
+        $response = Http::withToken($this->getAccessToken($account))
             ->get(self::BASE_URL.'/mediaItems', $query);
 
         $response->throw();
@@ -69,7 +69,7 @@ class GooglePhotosPickerService
         $downloadUrl = $baseUrl.'=dv';
         $path = 'transfers/'.$filename;
 
-        $response = Http::withToken($this->getToken($account))
+        $response = Http::withToken($this->getAccessToken($account))
             ->withOptions(['stream' => true])
             ->get($downloadUrl);
 

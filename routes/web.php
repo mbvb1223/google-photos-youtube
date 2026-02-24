@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/picker/sessions', [PickerSessionController::class, 'store'])->name('picker.sessions.store');
     Route::get('/picker/sessions/{sessionId}', [PickerSessionController::class, 'show'])->name('picker.sessions.show');
     Route::get('/picker/sessions/{sessionId}/media-items', [PickerSessionController::class, 'mediaItems'])->name('picker.sessions.media-items');
+    Route::get('/picker/thumbnail', [PickerSessionController::class, 'thumbnail'])->name('picker.thumbnail');
     Route::delete('/picker/sessions/{sessionId}', [PickerSessionController::class, 'destroy'])->name('picker.sessions.destroy');
 
     // Transfers

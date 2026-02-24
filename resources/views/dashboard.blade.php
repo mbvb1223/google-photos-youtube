@@ -99,7 +99,7 @@
                                 <template x-for="item in mediaItems" :key="item.id">
                                     <div class="group relative bg-gray-50 rounded-lg overflow-hidden">
                                         <div class="aspect-square">
-                                            <img :src="item.baseUrl + '=w256-h256'"
+                                            <img :src="'/picker/thumbnail?url=' + encodeURIComponent(item.mediaFile?.baseUrl)"
                                                  :alt="item.mediaFile?.filename || 'Video'"
                                                  class="w-full h-full object-cover"
                                                  loading="lazy">
