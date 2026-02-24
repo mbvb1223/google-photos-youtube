@@ -43,14 +43,14 @@ This is stored in a `connected_accounts` table:
 7. ~~**Create `app/Models/ConnectedAccount.php`** — Fillable fields, `encrypted:array` cast for `token`, `user()` relationship, token helper methods~~
 8. ~~**Create `app/Models/Transfer.php`** — Fillable fields, casts, `user()` relationship, status helper methods~~
 
-### Phase 2: Authentication
+### Phase 2: Authentication ✅
 
-9. **Laravel Breeze** — Provides register, login, logout, password reset out of the box. No customization needed.
-10. **Create `app/Http/Controllers/Auth/GoogleConnectController.php`** — Two OAuth flows:
-    - **Connect Photos** (`/auth/google/photos`) — Scope `photospicker.mediaitems.readonly`, offline access, forced consent. Callback stores token in `connected_accounts` with `provider_type=photos`
-    - **Connect YouTube** (`/auth/google/youtube`) — Scope `youtube.upload`, offline access, forced consent. Callback stores token in `connected_accounts` with `provider_type=youtube`
-    - Uses session state (`session()->put('google_auth_type', 'photos')`) to distinguish callbacks
-11. **Routes** — Connect routes: `/auth/google/photos`, `/auth/google/youtube`, `/auth/google/callback` (all require auth middleware)
+9. ~~**Laravel Breeze** — Provides register, login, logout, password reset out of the box. No customization needed.~~
+10. ~~**Create `app/Http/Controllers/Auth/GoogleConnectController.php`** — Two OAuth flows:~~
+    - ~~**Connect Photos** (`/auth/google/photos`) — Scope `photospicker.mediaitems.readonly`, offline access, forced consent. Callback stores token in `connected_accounts` with `provider_type=photos`~~
+    - ~~**Connect YouTube** (`/auth/google/youtube`) — Scope `youtube.upload`, offline access, forced consent. Callback stores token in `connected_accounts` with `provider_type=youtube`~~
+    - ~~Uses session state (`session()->put('google_auth_type', 'photos')`) to distinguish callbacks~~
+11. ~~**Routes** — Connect routes: `/auth/google/photos`, `/auth/google/youtube`, `/auth/google/callback` (all require auth middleware)~~
 
 ### Phase 3: Services
 
