@@ -2,6 +2,15 @@
 
 A Laravel 12 web app that downloads videos from Google Photos and uploads them to YouTube.
 
+## Features
+
+- Connect Google Photos and YouTube accounts via OAuth
+- Browse and select videos using Google Photos Picker
+- Configure title, description, and privacy per video before transfer
+- Optionally assign videos to a YouTube playlist
+- Background queue processing with real-time status updates
+- Transfer history with auto-refresh and cancellation support
+
 ## Requirements
 
 - PHP 8.2+
@@ -14,6 +23,8 @@ A Laravel 12 web app that downloads videos from Google Photos and uploads them t
 ```bash
 composer setup
 ```
+
+This will install dependencies, generate an app key, run migrations, and build frontend assets.
 
 ## Google OAuth Credentials
 
@@ -66,6 +77,16 @@ composer dev
 # Run tests
 composer test
 ```
+
+## Tech Stack
+
+- **Backend:** Laravel 12, PHP 8.2+
+- **Database:** MySQL
+- **Frontend:** Blade, Alpine.js, Tailwind CSS, Vite
+- **Auth:** Laravel Breeze (email/password)
+- **Queue:** Database driver
+- **Google API Client:** `google/apiclient`
+- **Testing:** PestPHP
 
 ## Commands
 

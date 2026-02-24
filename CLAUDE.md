@@ -6,8 +6,10 @@ A Laravel 12 web app that downloads videos from Google Photos and uploads them t
 
 - **Backend:** Laravel 12, PHP 8.2+
 - **Database:** MySQL (`google_photos_youtube`)
-- **Frontend:** Blade, Tailwind CSS v4, Vite
+- **Frontend:** Blade, Alpine.js, Tailwind CSS, Vite
 - **Queue:** Database driver
+- **Auth:** Laravel Breeze (email/password)
+- **Google API Client:** `google/apiclient` (OAuth2, Photos Picker, YouTube Data API)
 - **Testing:** PestPHP
 
 ## Development
@@ -42,20 +44,51 @@ composer test
 
 ## Architecture
 
-- **Controllers** — Thin controllers, delegate to services
-- **Services** — Business logic in `app/Services/`
-- **Jobs** — Long-running tasks (video download/upload) in `app/Jobs/`
-- **Models** — Eloquent models in `app/Models/`
+- **Controllers** — Thin controllers, delegate to services (`app/Http/Controllers/`)
+- **Services** — Business logic (`app/Services/`)
+- **Jobs** — Long-running tasks (video download/upload) (`app/Jobs/`)
+- **Models** — Eloquent models (`app/Models/`)
+
+### Key Files
+
+- `app/Services/GoogleAuthService.php` — Token management & auto-refresh
+- `app/Services/GooglePhotosPickerService.php` — Picker sessions, media items, video download
+- `app/Services/YouTubeUploadService.php` — Resumable chunked video upload
+- `app/Services/YouTubePlaylistService.php` — Playlist listing & video assignment
+- `app/Jobs/ProcessTransferJob.php` — Download from Photos → upload to YouTube pipeline
+- `app/Http/Controllers/Auth/GoogleConnectController.php` — OAuth connect/disconnect flows
+- `app/Http/Controllers/PickerSessionController.php` — Picker API proxy endpoints
+- `app/Http/Controllers/TransferController.php` — Transfer CRUD & job dispatch
+- `app/Http/Controllers/YouTubeController.php` — YouTube playlist listing
+- `app/Http/Controllers/DashboardController.php` — Main dashboard view
+- `resources/js/app.js` — Alpine.js components (`pickerFlow`, `transferHistory`)
+- `resources/views/dashboard.blade.php` — Main UI (connection cards, video grid, transfer history)
+
+### Models
+
+- **User** — Has many `ConnectedAccount` and `Transfer`. Has one `photosAccount` / `youtubeAccount`.
+- **ConnectedAccount** — Stores OAuth tokens (`encrypted:array`). Unique on `(user_id, provider_type)`. Provider types: `photos`, `youtube`.
+- **Transfer** — Tracks video transfer lifecycle. Statuses: `pending`, `processing`, `completed`, `failed`, `cancelled`.
+
+### Transfer Flow
+
+1. User selects videos via Google Photos Picker popup
+2. Frontend polls picker session until complete, fetches media items
+3. User configures title/description/privacy per video, optionally selects YouTube playlist
+4. POST `/transfers` creates Transfer records and dispatches `ProcessTransferJob` per video
+5. Job downloads video from Google Photos (streamed), uploads to YouTube (resumable 2MB chunks)
+6. If playlist selected, adds video to playlist after upload
+7. Transfer status updated throughout; frontend auto-polls for updates
 
 ## APIs
 
 - **Google Photos Picker API** — For selecting videos (Library API readonly scopes deprecated March 2025)
-- **YouTube Data API v3** — For uploading videos
-- **Google OAuth2** — Via Laravel Socialite
+- **YouTube Data API v3** — For uploading videos and managing playlists
+- **Google OAuth2** — Via `google/apiclient` (separate scopes for Photos and YouTube)
 
 ## API Documentation
 
-Reference docs in `docs/` before making any API-related changes or debugging API issues. These contain the authoritative endpoint URLs, parameters, and response formats.
+Reference docs in `.claude/docs/` before making any API-related changes or debugging API issues. These contain the authoritative endpoint URLs, parameters, and response formats.
 
 - `.claude/docs/google-photos-picker-api/` — Google Photos Picker API (sessions, mediaItems)
 - `.claude/docs/youtube-data-api/` — YouTube Data API v3 (videos, channels, playlists, playlistItems, search, captions, thumbnails, resumable uploads)
