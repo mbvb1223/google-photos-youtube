@@ -150,9 +150,9 @@ Alpine.data('pickerFlow', () => ({
             .map(item => ({
                 ...item,
                 _selected: true,
-                _title: this.stripExtension(item.mediaFile?.filename),
+                _title: item.createTime ? item.createTime.substring(0, 10) : this.stripExtension(item.mediaFile?.filename),
                 _description: '',
-                _privacy: 'private',
+                _privacy: 'unlisted',
             }));
     },
 
