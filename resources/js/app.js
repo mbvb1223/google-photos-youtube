@@ -116,7 +116,7 @@ Alpine.data('pickerFlow', () => ({
             pageToken = data.nextPageToken || null;
         } while (pageToken);
 
-        this.mediaItems = items;
+        this.mediaItems = items.filter(item => item.type === 'VIDEO');
     },
 
     async cleanupSession() {
