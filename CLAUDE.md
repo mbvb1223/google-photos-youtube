@@ -57,7 +57,7 @@ composer test
 
 Reference docs in `docs/` before making any API-related changes or debugging API issues. These contain the authoritative endpoint URLs, parameters, and response formats.
 
-- `docs/google-photos-picker-api/` — Google Photos Picker API (sessions, mediaItems)
+- `.claude/docs/google-photos-picker-api/` — Google Photos Picker API (sessions, mediaItems)
 
 ## Environment Variables
 
@@ -69,4 +69,4 @@ GOOGLE_REDIRECT_URI=${APP_URL}/auth/google/callback
 
 ## Project Plan
 
-Always refer to `PLAN.md` for the implementation roadmap, current progress, and next steps. Check which phases/steps are completed (~~strikethrough~~) and which are pending before starting any work.
+Always refer to `.claude/PLAN.md` for the implementation roadmap, current progress, and next steps. Check which phases/steps are completed (~~strikethrough~~) and which are pending before starting any work.
