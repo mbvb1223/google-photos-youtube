@@ -73,7 +73,7 @@ Each step is one end-to-end feature, built and tested before moving to the next.
 20. ~~**Connect Google Photos** — Dashboard card to connect/disconnect Google Photos account via OAuth. Shows connected email + name when linked. Flash messages for success/error.~~
 21. ~~**List videos from Google Photos** — "Select Videos" button opens Picker popup. Alpine.js `pickerFlow` component handles session creation, popup, polling, fetching media items. Selected videos displayed in responsive grid with thumbnails, filenames, mime types.~~
 22. ~~**Connect YouTube** — Dashboard card to connect/disconnect YouTube account via OAuth. Shows connected email when linked. Independent from Photos connection.~~
-23. **Transfer videos** — Transfer config form: select which videos to transfer, set title/description/privacy per video. "Transfer" button dispatches queue jobs. Requires both accounts connected.
+23. ~~**Transfer videos** — Transfer config form: select which videos to transfer, set title/description/privacy per video. "Transfer" button dispatches queue jobs. Requires both accounts connected.~~
 24. **Transfer history** — Transfer history table on dashboard: status (pending/processing/completed/failed), progress, YouTube video links, error messages. Auto-refreshes via polling.
 25. **Landing page & layout** — Update welcome page with app description + login/register links. Add app-specific nav items to Breeze layout.
 

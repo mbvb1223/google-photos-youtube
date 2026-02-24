@@ -20,6 +20,7 @@ class GoogleConnectController extends Controller
         $client->setRedirectUri(config('services.google.redirect'));
         $client->setAccessType('offline');
         $client->setPrompt('consent');
+        $client->setIncludeGrantedScopes(true);
 
         return $client;
     }

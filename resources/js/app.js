@@ -13,8 +13,37 @@ Alpine.data('pickerFlow', () => ({
     pollTimer: null,
     popupWindow: null,
 
+    // Transfer state
+    transferring: false,
+    transferError: null,
+    transferSuccess: null,
+
+    get selectedItems() {
+        return this.mediaItems.filter(item => item._selected);
+    },
+
+    get selectedCount() {
+        return this.selectedItems.length;
+    },
+
+    get allSelected() {
+        return this.mediaItems.length > 0 && this.mediaItems.every(item => item._selected);
+    },
+
+    toggleAll() {
+        const newState = !this.allSelected;
+        this.mediaItems.forEach(item => item._selected = newState);
+    },
+
+    stripExtension(filename) {
+        if (!filename) return 'Untitled';
+        return filename.replace(/\.[^/.]+$/, '');
+    },
+
     async openPicker() {
         this.error = null;
+        this.transferError = null;
+        this.transferSuccess = null;
         this.loading = true;
         this.statusMessage = 'Creating session...';
 
@@ -116,7 +145,62 @@ Alpine.data('pickerFlow', () => ({
             pageToken = data.nextPageToken || null;
         } while (pageToken);
 
-        this.mediaItems = items.filter(item => item.type === 'VIDEO');
+        this.mediaItems = items
+            .filter(item => item.type === 'VIDEO')
+            .map(item => ({
+                ...item,
+                _selected: true,
+                _title: this.stripExtension(item.mediaFile?.filename),
+                _description: '',
+                _privacy: 'private',
+            }));
+    },
+
+    async submitTransfers() {
+        this.transferError = null;
+        this.transferSuccess = null;
+
+        if (this.selectedCount === 0) {
+            this.transferError = 'Please select at least one video to transfer.';
+            return;
+        }
+
+        this.transferring = true;
+
+        try {
+            const videos = this.selectedItems.map(item => ({
+                media_id: item.id,
+                base_url: item.mediaFile?.baseUrl,
+                filename: item.mediaFile?.filename || 'video',
+                mime_type: item.mediaFile?.mimeType || 'video/mp4',
+                title: item._title,
+                description: item._description || null,
+                privacy_status: item._privacy,
+            }));
+
+            const response = await fetch('/transfers', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({ videos }),
+            });
+
+            if (!response.ok) {
+                const data = await response.json().catch(() => ({}));
+                throw new Error(data.error || data.message || `Transfer failed (${response.status})`);
+            }
+
+            const transfers = await response.json();
+            this.transferSuccess = `${transfers.length} video(s) queued for transfer to YouTube.`;
+            this.mediaItems = [];
+        } catch (e) {
+            this.transferError = e.message || 'Failed to start transfer.';
+        } finally {
+            this.transferring = false;
+        }
     },
 
     async cleanupSession() {
