@@ -32,16 +32,16 @@ This is stored in a `connected_accounts` table:
 
 ## Implementation Steps
 
-### Phase 1: Foundation
+### Phase 1: Foundation ✅
 
-1. **Install packages** — `composer require laravel/breeze google/apiclient`, then `php artisan breeze:install blade`
-2. **Environment variables** — Add `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REDIRECT_URI` to `.env` and `.env.example`
-3. **Config** — Add `google` key to `config/services.php`; increase `retry_after` to 3600 in `config/queue.php`
-4. **Migration: connected_accounts** — Create `connected_accounts` table: `id`, `user_id` (FK), `provider`, `provider_type`, `google_id`, `email`, `name`, `token` (text), unique on `(user_id, provider_type)`
-5. **Migration: transfers** — Create `transfers` table: `user_id`, `google_photos_media_id`, `google_photos_base_url`, `filename`, `mime_type`, `title`, `description`, `privacy_status`, `status`, `youtube_video_id`, `error_message`, `file_size`, `started_at`, `completed_at`
-6. **Update `app/Models/User.php`** — Add `connectedAccounts()` / `transfers()` relationships, helper methods `photosAccount()` and `youtubeAccount()`
-7. **Create `app/Models/ConnectedAccount.php`** — Fillable fields, `encrypted:array` cast for `token`, `user()` relationship, token helper methods
-8. **Create `app/Models/Transfer.php`** — Fillable fields, casts, `user()` relationship, status helper methods
+1. ~~**Install packages** — `composer require laravel/breeze google/apiclient`, then `php artisan breeze:install blade`~~
+2. ~~**Environment variables** — Add `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REDIRECT_URI` to `.env` and `.env.example`~~
+3. ~~**Config** — Add `google` key to `config/services.php`~~ (skipped `retry_after` — will set on job instead)
+4. ~~**Migration: connected_accounts** — Create `connected_accounts` table: `id`, `user_id` (FK), `provider`, `provider_type`, `google_id`, `email`, `name`, `token` (text), unique on `(user_id, provider_type)`~~
+5. ~~**Migration: transfers** — Create `transfers` table: `user_id`, `google_photos_media_id`, `google_photos_base_url`, `filename`, `mime_type`, `title`, `description`, `privacy_status`, `status`, `youtube_video_id`, `error_message`, `file_size`, `started_at`, `completed_at`~~
+6. ~~**Update `app/Models/User.php`** — Add `connectedAccounts()` / `transfers()` relationships, helper methods `photosAccount()` and `youtubeAccount()`~~
+7. ~~**Create `app/Models/ConnectedAccount.php`** — Fillable fields, `encrypted:array` cast for `token`, `user()` relationship, token helper methods~~
+8. ~~**Create `app/Models/Transfer.php`** — Fillable fields, casts, `user()` relationship, status helper methods~~
 
 ### Phase 2: Authentication
 
