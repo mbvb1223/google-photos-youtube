@@ -23,6 +23,7 @@ class Transfer extends Model
         'privacy_status',
         'status',
         'youtube_video_id',
+        'youtube_playlist_id',
         'error_message',
         'file_size',
         'started_at',

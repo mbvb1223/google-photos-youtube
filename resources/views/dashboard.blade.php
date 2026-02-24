@@ -191,6 +191,18 @@
                         <div class="border-t border-gray-200 p-6">
                             <h4 class="text-md font-medium text-gray-900 mb-4">Transfer Settings</h4>
 
+                            {{-- Shared playlist dropdown --}}
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Add to YouTube Playlist</label>
+                                <select x-model="selectedPlaylist"
+                                        class="w-full sm:w-64 text-sm border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                    <option value="">No playlist</option>
+                                    <template x-for="playlist in playlists" :key="playlist.id">
+                                        <option :value="playlist.id" x-text="playlist.title"></option>
+                                    </template>
+                                </select>
+                            </div>
+
                             <div class="space-y-4">
                                 <template x-for="(item, index) in mediaItems" :key="'config-' + item.id">
                                     <div x-show="item._selected" class="flex gap-4 items-start p-4 bg-gray-50 rounded-lg">

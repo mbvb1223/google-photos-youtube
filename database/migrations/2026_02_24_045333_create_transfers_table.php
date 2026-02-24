@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('privacy_status')->default('private');
             $table->string('status')->default('pending');
             $table->string('youtube_video_id')->nullable();
+            $table->string('youtube_playlist_id')->nullable();
             $table->text('error_message')->nullable();
             $table->unsignedBigInteger('file_size')->nullable();
             $table->timestamp('started_at')->nullable();

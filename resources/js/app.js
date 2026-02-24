@@ -14,6 +14,10 @@ Alpine.data('pickerFlow', () => ({
     sessionId: null,
     pollTimer: null,
 
+    // Playlist state
+    playlists: [],
+    selectedPlaylist: '',
+
     // Transfer state
     transferring: false,
     transferError: null,
@@ -105,6 +109,7 @@ Alpine.data('pickerFlow', () => ({
                     _popupWindow = null;
                     this.statusMessage = 'Loading videos...';
                     await this.fetchMediaItems();
+                    this.fetchPlaylists();
                     await this.cleanupSession();
                     this.loading = false;
                 }
@@ -161,6 +166,20 @@ Alpine.data('pickerFlow', () => ({
             }));
     },
 
+    async fetchPlaylists() {
+        try {
+            const response = await fetch('/youtube/playlists', {
+                headers: { 'Accept': 'application/json' },
+            });
+
+            if (response.ok) {
+                this.playlists = await response.json();
+            }
+        } catch {
+            // Silently fail — playlist selection is optional
+        }
+    },
+
     async submitTransfers() {
         this.transferError = null;
         this.transferSuccess = null;
@@ -190,7 +209,7 @@ Alpine.data('pickerFlow', () => ({
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                     'Accept': 'application/json',
                 },
-                body: JSON.stringify({ videos }),
+                body: JSON.stringify({ videos, playlist_id: this.selectedPlaylist || null }),
             });
 
             if (!response.ok) {

@@ -6,6 +6,7 @@ namespace App\Jobs;
 
 use App\Models\Transfer;
 use App\Services\GooglePhotosPickerService;
+use App\Services\YouTubePlaylistService;
 use App\Services\YouTubeUploadService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -29,6 +30,7 @@ class ProcessTransferJob implements ShouldQueue
     public function handle(
         GooglePhotosPickerService $pickerService,
         YouTubeUploadService $uploadService,
+        YouTubePlaylistService $playlistService,
     ): void {
         if ($this->transfer->status === 'cancelled') {
             return;
@@ -62,6 +64,14 @@ class ProcessTransferJob implements ShouldQueue
                 $this->transfer->description,
                 $this->transfer->privacy_status,
             );
+
+            if ($this->transfer->youtube_playlist_id) {
+                $playlistService->addVideoToPlaylist(
+                    $youtubeAccount,
+                    $this->transfer->youtube_playlist_id,
+                    $videoId,
+                );
+            }
 
             $this->transfer->update([
                 'status' => 'completed',

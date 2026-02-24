@@ -14,7 +14,7 @@ class GoogleConnectController extends Controller
 {
     private function getClient(): GoogleClient
     {
-        $client = new GoogleClient();
+        $client = new GoogleClient;
         $client->setClientId(config('services.google.client_id'));
         $client->setClientSecret(config('services.google.client_secret'));
         $client->setRedirectUri(config('services.google.redirect'));
@@ -44,7 +44,7 @@ class GoogleConnectController extends Controller
         $client->addScope('openid');
         $client->addScope('email');
         $client->addScope('profile');
-        $client->addScope('https://www.googleapis.com/auth/youtube.upload');
+        $client->addScope('https://www.googleapis.com/auth/youtube');
 
         $request->session()->put('google_auth_type', 'youtube');
 

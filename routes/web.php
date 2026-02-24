@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PickerSessionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransferController;
+use App\Http\Controllers\YouTubeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -32,6 +33,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/picker/sessions/{sessionId}/media-items', [PickerSessionController::class, 'mediaItems'])->name('picker.sessions.media-items');
     Route::get('/picker/thumbnail', [PickerSessionController::class, 'thumbnail'])->name('picker.thumbnail');
     Route::delete('/picker/sessions/{sessionId}', [PickerSessionController::class, 'destroy'])->name('picker.sessions.destroy');
+
+    // YouTube
+    Route::get('/youtube/playlists', [YouTubeController::class, 'playlists'])->name('youtube.playlists');
 
     // Transfers
     Route::get('/transfers', [TransferController::class, 'index'])->name('transfers.index');

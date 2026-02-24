@@ -35,6 +35,7 @@ class TransferController extends Controller
             'videos.*.title' => 'required|string|max:100',
             'videos.*.description' => 'nullable|string|max:5000',
             'videos.*.privacy_status' => 'nullable|string|in:private,unlisted,public',
+            'playlist_id' => 'nullable|string',
         ]);
 
         $transfers = [];
@@ -48,6 +49,7 @@ class TransferController extends Controller
                 'title' => $video['title'],
                 'description' => $video['description'] ?? null,
                 'privacy_status' => $video['privacy_status'] ?? 'private',
+                'youtube_playlist_id' => $validated['playlist_id'] ?? null,
                 'status' => 'pending',
             ]);
 

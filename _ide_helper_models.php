@@ -56,6 +56,7 @@ namespace App\Models{
  * @property string $privacy_status
  * @property string $status
  * @property string|null $youtube_video_id
+ * @property string|null $youtube_playlist_id
  * @property string|null $error_message
  * @property int|null $file_size
  * @property \Illuminate\Support\Carbon|null $started_at
@@ -82,6 +83,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transfer whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transfer whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transfer whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Transfer whereYoutubePlaylistId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transfer whereYoutubeVideoId($value)
  * @mixin \Eloquent
  */
