@@ -4,6 +4,8 @@ import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
 
+let _popupWindow = null;
+
 Alpine.data('pickerFlow', () => ({
     loading: false,
     statusMessage: '',
@@ -11,7 +13,6 @@ Alpine.data('pickerFlow', () => ({
     mediaItems: [],
     sessionId: null,
     pollTimer: null,
-    popupWindow: null,
 
     // Transfer state
     transferring: false,
@@ -51,8 +52,8 @@ Alpine.data('pickerFlow', () => ({
             const session = await this.createSession();
             this.sessionId = session.id;
 
-            this.popupWindow = window.open(
-                session.pickerUri,
+            _popupWindow = window.open(
+                session.pickerUri + '/autoclose',
                 'googlePhotosPicker',
                 'width=1024,height=700,left=100,top=100'
             );
@@ -98,6 +99,10 @@ Alpine.data('pickerFlow', () => ({
 
                 if (session.mediaItemsSet) {
                     this.stopPolling();
+                    // try {
+                    //     if (_popupWindow) _popupWindow.close();
+                    // } catch (_) {}
+                    _popupWindow = null;
                     this.statusMessage = 'Loading videos...';
                     await this.fetchMediaItems();
                     await this.cleanupSession();
