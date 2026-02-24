@@ -24,7 +24,7 @@ class GooglePhotosPickerService
     public function createSession(ConnectedAccount $account): array
     {
         $response = Http::withToken($this->getToken($account))
-            ->post(self::BASE_URL.'/sessions');
+            ->post(self::BASE_URL.'/sessions', []);
 
         $response->throw();
 
