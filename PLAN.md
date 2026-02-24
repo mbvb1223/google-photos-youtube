@@ -9,15 +9,16 @@ Build a Laravel 12 web app that lets users download videos from **one Google acc
 ## Packages to Install
 
 ```bash
-composer require laravel/socialite google/apiclient
+composer require laravel/breeze google/apiclient
+php artisan breeze:install blade
 ```
 
-## Architecture: Dual-Account OAuth
+## Architecture
 
-The app login uses a simple Google sign-in (basic profile). Then the user connects two **separate** Google accounts from the dashboard:
+The app uses standard email/password authentication (Laravel Breeze). From the dashboard, the user connects two **separate** Google accounts via OAuth:
 
-1. **Connect Google Photos** — OAuth with scope `photospicker.mediaitems.readonly` (can be a different Google account)
-2. **Connect YouTube** — OAuth with scope `youtube.upload` (can be a different Google account)
+1. **Connect Google Photos** — OAuth with scope `photospicker.mediaitems.readonly` (any Google account)
+2. **Connect YouTube** — OAuth with scope `youtube.upload` (any Google account, can be different)
 
 This is stored in a `connected_accounts` table:
 
@@ -33,24 +34,23 @@ This is stored in a `connected_accounts` table:
 
 ### Phase 1: Foundation
 
-1. **Install packages** — `composer require laravel/socialite google/apiclient`
+1. **Install packages** — `composer require laravel/breeze google/apiclient`, then `php artisan breeze:install blade`
 2. **Environment variables** — Add `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REDIRECT_URI` to `.env` and `.env.example`
 3. **Config** — Add `google` key to `config/services.php`; increase `retry_after` to 3600 in `config/queue.php`
-4. **Migration: users** — Add `google_id` (string, nullable, unique) column; make `password` nullable
-5. **Migration: connected_accounts** — Create `connected_accounts` table: `id`, `user_id` (FK), `provider`, `provider_type`, `google_id`, `email`, `name`, `token` (text), unique on `(user_id, provider_type)`
-6. **Migration: transfers** — Create `transfers` table: `user_id`, `google_photos_media_id`, `google_photos_base_url`, `filename`, `mime_type`, `title`, `description`, `privacy_status`, `status`, `youtube_video_id`, `error_message`, `file_size`, `started_at`, `completed_at`
-7. **Update `app/Models/User.php`** — Add `google_id` to fillable, `connectedAccounts()` / `transfers()` relationships, helper methods `photosAccount()` and `youtubeAccount()`
-8. **Create `app/Models/ConnectedAccount.php`** — Fillable fields, `encrypted:array` cast for `token`, `user()` relationship, token helper methods
-9. **Create `app/Models/Transfer.php`** — Fillable fields, casts, `user()` relationship, status helper methods
+4. **Migration: connected_accounts** — Create `connected_accounts` table: `id`, `user_id` (FK), `provider`, `provider_type`, `google_id`, `email`, `name`, `token` (text), unique on `(user_id, provider_type)`
+5. **Migration: transfers** — Create `transfers` table: `user_id`, `google_photos_media_id`, `google_photos_base_url`, `filename`, `mime_type`, `title`, `description`, `privacy_status`, `status`, `youtube_video_id`, `error_message`, `file_size`, `started_at`, `completed_at`
+6. **Update `app/Models/User.php`** — Add `connectedAccounts()` / `transfers()` relationships, helper methods `photosAccount()` and `youtubeAccount()`
+7. **Create `app/Models/ConnectedAccount.php`** — Fillable fields, `encrypted:array` cast for `token`, `user()` relationship, token helper methods
+8. **Create `app/Models/Transfer.php`** — Fillable fields, casts, `user()` relationship, status helper methods
 
 ### Phase 2: Authentication
 
-10. **Create `app/Http/Controllers/Auth/GoogleController.php`** — Three OAuth flows:
-    - **Login** (`/auth/google`) — Basic profile scope, creates/updates user, logs in
+9. **Laravel Breeze** — Provides register, login, logout, password reset out of the box. No customization needed.
+10. **Create `app/Http/Controllers/Auth/GoogleConnectController.php`** — Two OAuth flows:
     - **Connect Photos** (`/auth/google/photos`) — Scope `photospicker.mediaitems.readonly`, offline access, forced consent. Callback stores token in `connected_accounts` with `provider_type=photos`
     - **Connect YouTube** (`/auth/google/youtube`) — Scope `youtube.upload`, offline access, forced consent. Callback stores token in `connected_accounts` with `provider_type=youtube`
     - Uses session state (`session()->put('google_auth_type', 'photos')`) to distinguish callbacks
-11. **Routes** — Auth routes: `/auth/google`, `/auth/google/photos`, `/auth/google/youtube`, `/auth/google/callback`, `/auth/logout`
+11. **Routes** — Connect routes: `/auth/google/photos`, `/auth/google/youtube`, `/auth/google/callback` (all require auth middleware)
 
 ### Phase 3: Services
 
@@ -68,8 +68,8 @@ This is stored in a `connected_accounts` table:
 
 ### Phase 5: Frontend
 
-20. **Create `resources/views/layouts/app.blade.php`** — Minimal layout with Vite assets, nav bar, CSRF meta tag
-21. **Replace `resources/views/welcome.blade.php`** — Landing page with "Sign in with Google" button
+20. **Update Breeze layout** — Extend `resources/views/layouts/app.blade.php` with any app-specific nav items
+21. **Replace `resources/views/welcome.blade.php`** — Landing page with login/register links
 22. **Create `resources/views/dashboard.blade.php`** — Main dashboard with:
     - **Account connections section** — "Connect Google Photos" and "Connect YouTube" buttons, showing connected account email when linked (with disconnect option)
     - **Video selection area** — "Select Videos" button (disabled until Photos account connected)
@@ -79,7 +79,7 @@ This is stored in a `connected_accounts` table:
 
 ### Phase 6: Tests
 
-24. **Feature tests** — Auth flows (login, connect photos, connect youtube), picker session endpoints, transfer CRUD + authorization
+24. **Feature tests** — Auth flows (register, login, connect photos, connect youtube), picker session endpoints, transfer CRUD + authorization
 25. **Unit tests** — GoogleAuthService token refresh, services, ProcessTransferJob status transitions + cleanup
 
 ## File Summary
@@ -88,13 +88,13 @@ This is stored in a `connected_accounts` table:
 - `.env` / `.env.example` — Google credentials
 - `config/services.php` — Google config
 - `config/queue.php` — Increase retry_after
-- `app/Models/User.php` — Google fields + relationships
+- `app/Models/User.php` — Relationships (`connectedAccounts`, `transfers`)
 - `resources/views/welcome.blade.php` — Landing page
+- `resources/views/layouts/app.blade.php` — App-specific nav items
 - `resources/js/app.js` — Picker flow
 - `routes/web.php` — All routes
 
 **New:**
-- `database/migrations/*_add_google_id_to_users_table.php`
 - `database/migrations/*_create_connected_accounts_table.php`
 - `database/migrations/*_create_transfers_table.php`
 - `app/Models/ConnectedAccount.php`
@@ -102,18 +102,18 @@ This is stored in a `connected_accounts` table:
 - `app/Services/GoogleAuthService.php`
 - `app/Services/GooglePhotosPickerService.php`
 - `app/Services/YouTubeUploadService.php`
-- `app/Http/Controllers/Auth/GoogleController.php`
+- `app/Http/Controllers/Auth/GoogleConnectController.php`
 - `app/Http/Controllers/DashboardController.php`
 - `app/Http/Controllers/PickerSessionController.php`
 - `app/Http/Controllers/TransferController.php`
 - `app/Jobs/ProcessTransferJob.php`
-- `resources/views/layouts/app.blade.php`
 - `resources/views/dashboard.blade.php`
-- `tests/Feature/Auth/GoogleAuthTest.php`
+- `tests/Feature/Auth/GoogleConnectTest.php`
 - `tests/Feature/TransferTest.php`
 
 ## Key Design Decisions
 
+- **Email/password auth** — Standard Laravel Breeze login. Simple, no Google dependency for app access.
 - **Dual-account OAuth** — Separate connected accounts for Photos and YouTube, allowing different Google accounts for source and destination.
 - **`connected_accounts` table** — Polymorphic-style table with `provider_type` to cleanly separate Photos vs YouTube tokens. Extensible for future providers.
 - **Picker API over Library API** — Library API readonly scopes removed March 2025. Picker API uses a popup redirect.
@@ -126,10 +126,10 @@ This is stored in a `connected_accounts` table:
 
 1. `php artisan migrate` — Migrations run cleanly
 2. `composer dev` — App starts (server + queue + vite)
-3. Visit `/` → "Sign in with Google" → logs in with Google account A
+3. Visit `/` → Register with email/password → logs in
 4. Dashboard shows "Connect Google Photos" and "Connect YouTube" buttons
-5. "Connect Google Photos" → OAuth with account B → shows connected email
-6. "Connect YouTube" → OAuth with account C → shows connected email
+5. "Connect Google Photos" → OAuth with Google account A → shows connected email
+6. "Connect YouTube" → OAuth with Google account B → shows connected email
 7. "Select Videos" → popup → select videos → popup closes → videos listed
 8. Configure title/privacy → submit → queue processes → video appears on YouTube account C
 9. `php artisan test` — All tests pass
