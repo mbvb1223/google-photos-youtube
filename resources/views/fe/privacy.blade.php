@@ -6,7 +6,7 @@
     <main class="flex-1 px-6 py-12 lg:py-24">
         <div class="max-w-3xl mx-auto">
             <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-4 tracking-tight">Privacy Policy</h1>
-            <p class="text-slate-500 dark:text-slate-400 text-sm mb-12">Last updated: March 3, 2026</p>
+            <p class="text-slate-500 dark:text-slate-400 text-sm mb-12">Last updated: September 3, 2025</p>
 
             <div class="prose prose-slate dark:prose-invert max-w-none space-y-8 text-slate-600 dark:text-slate-400 leading-relaxed">
                 <section>
