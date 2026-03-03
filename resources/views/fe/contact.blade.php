@@ -45,7 +45,7 @@
                             <div>
                                 <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1">Email Support</h3>
                                 <p class="text-slate-600 dark:text-slate-400 mb-2">Our average response time is under 2 hours.</p>
-                                <a class="text-primary font-semibold hover:underline" href="mailto:support@photos2tube.com">support@photos2tube.com</a>
+                                <a class="text-primary font-semibold hover:underline" href="mailto:pckhien@gmail.com">pckhien@gmail.com</a>
                             </div>
                         </div>
                     </div>
