@@ -61,7 +61,7 @@ jobs:
       - run:
           name: Run Unit tests
           command: |
-            XDEBUG_MODE=coverage ./vendor/bin/phpunit tests/Unit
+            ./vendor/bin/pest
 
   deploy:
     working_directory: ~/photos2youtube
@@ -79,9 +79,9 @@ jobs:
             mkdir -p ~/.ssh
             ssh-keyscan -H 18.140.105.53 >> ~/.ssh/known_hosts
       - run:
-          name: Deploy to production
+          name: Deploy
           command: |
-            vendor/bin/dep deploy production --no-interaction
+            vendor/bin/dep deploy --no-interaction
 
 workflows:
   CI_CD:
