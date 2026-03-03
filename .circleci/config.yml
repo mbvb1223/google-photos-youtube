@@ -19,6 +19,7 @@ jobs:
           name: Setup environment
           command: |
             cp .env.example .env
+            php artisan key:generate
             npm install cross-env
 
       - restore_cache:
