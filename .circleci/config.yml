@@ -40,6 +40,10 @@ jobs:
 
       - run: composer install -n --prefer-dist
 
+      - run:
+          name: Generate application key
+          command: php artisan key:generate
+
       - save_cache:
           paths:
             - ./vendor
