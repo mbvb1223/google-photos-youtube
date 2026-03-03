@@ -63,27 +63,25 @@ jobs:
           command: |
             XDEBUG_MODE=coverage ./vendor/bin/phpunit tests/Unit
 
-  deploy_staging:
+  deploy:
+    working_directory: ~/photos2youtube
     docker:
-      - image: cimg/php:8.3
+      - image: cimg/php:8.4
     steps:
-      - checkout
+      - attach_workspace:
+          at: ~/
+      - add_ssh_keys:
+          fingerprints:
+            - "${SSH_KEY_FINGERPRINT}"
       - run:
-          name: Install Deployer
+          name: Add EC2 host to known_hosts
           command: |
-            curl -LO https://deployer.org/deployer.phar
-            sudo mv deployer.phar /usr/local/bin/dep
-            sudo chmod +x /usr/local/bin/dep
-      - run:
-          name: Add SSH key to agent
-          command: |
-            ssh-agent
-            echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
             mkdir -p ~/.ssh
-            ssh-keyscan 3.0.189.57 >> ~/.ssh/known_hosts
+            ssh-keyscan -H 18.140.105.53 >> ~/.ssh/known_hosts
       - run:
-          name: Deploy to Staging
-          command: dep deploy staging --no-interaction
+          name: Deploy to production
+          command: |
+            vendor/bin/dep deploy production --no-interaction
 
 workflows:
   CI_CD:
@@ -92,9 +90,9 @@ workflows:
       - unit_test:
           requires:
             - build
-      - deploy_staging:
+      - deploy:
           requires:
             - unit_test
           filters:
             branches:
-              only: staging
+              only: master
