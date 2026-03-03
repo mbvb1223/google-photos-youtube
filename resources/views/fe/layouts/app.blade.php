@@ -39,14 +39,14 @@
 <body class="bg-white dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
 <div class="relative min-h-screen flex flex-col soft-gradient">
     <header class="w-full max-w-7xl mx-auto px-6 lg:px-10 py-6 flex items-center justify-between">
-        <div class="flex items-center gap-2 text-primary">
-            <span class="material-symbols-outlined text-3xl font-bold">auto_videocam</span>
-            <span class="text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100"><a href="{{ route('home') }}">Photos2Tube</a></span>
-        </div>
+        <a href="{{ route('home') }}" class="flex items-center gap-2">
+            <img src="/logo.png" alt="Photos2Tube" class="h-12 w-auto"/>
+            <span class="text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100">Photos2Tube</span>
+        </a>
         <nav class="hidden md:flex items-center gap-10">
-            <a class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="{{ route('how-it-works') }}">How It Works</a>
-            <a class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="{{ route('pricing') }}">Pricing</a>
-            <a class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="{{ route('contact') }}">Contact</a>
+            <a class="text-sm font-semibold transition-colors {{ request()->routeIs('how-it-works') ? 'text-primary' : 'text-slate-600 dark:text-slate-400 hover:text-primary' }}" href="{{ route('how-it-works') }}">How It Works</a>
+            <a class="text-sm font-semibold transition-colors {{ request()->routeIs('pricing') ? 'text-primary' : 'text-slate-600 dark:text-slate-400 hover:text-primary' }}" href="{{ route('pricing') }}">Pricing</a>
+            <a class="text-sm font-semibold transition-colors {{ request()->routeIs('contact') ? 'text-primary' : 'text-slate-600 dark:text-slate-400 hover:text-primary' }}" href="{{ route('contact') }}">Contact</a>
         </nav>
         <div class="flex items-center gap-4">
             <a href="{{ route('login') }}" class="hidden sm:block px-5 py-2.5 text-sm font-bold text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
@@ -66,9 +66,7 @@
                 <!-- Branding Column -->
                 <div class="col-span-1 md:col-span-1 flex flex-col gap-4">
                     <a href="{{ route('home') }}" class="flex items-center gap-2 group">
-                        <div class="bg-primary p-1.5 rounded-lg">
-                            <span class="material-symbols-outlined text-white text-2xl">auto_videocam</span>
-                        </div>
+                        <img src="/logo.png" alt="Photos2Tube" class="h-8 w-auto"/>
                         <span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Photos2Tube</span>
                     </a>
                     <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed max-w-xs">
@@ -88,8 +86,8 @@
                     <div class="flex flex-col gap-4">
                         <h3 class="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider">Legal</h3>
                         <nav class="flex flex-col gap-3">
-                            <a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors text-sm" href="#">Privacy Policy</a>
-                            <a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors text-sm" href="#">Terms of Service</a>
+                            <a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors text-sm" href="{{ route('privacy') }}">Privacy Policy</a>
+                            <a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors text-sm" href="{{ route('terms') }}">Terms of Service</a>
                         </nav>
                     </div>
                 </div>

@@ -13,6 +13,8 @@ Route::get('/', [FeController::class, 'index'])->name('home');
 Route::get('/how-it-works', [FeController::class, 'work'])->name('how-it-works');
 Route::get('/pricing', [FeController::class, 'pricing'])->name('pricing');
 Route::get('/contact', [FeController::class, 'contact'])->name('contact');
+Route::get('/privacy', [FeController::class, 'privacy'])->name('privacy');
+Route::get('/terms', [FeController::class, 'terms'])->name('terms');
 
 Route::get('/dashboard', DashboardController::class)
     ->middleware(['auth', 'verified'])

@@ -27,4 +27,14 @@ class FeController extends Controller
     {
         return view('fe.contact');
     }
+
+    public function privacy(): View
+    {
+        return view('fe.privacy');
+    }
+
+    public function terms(): View
+    {
+        return view('fe.terms');
+    }
 }
