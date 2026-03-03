@@ -1,0 +1,100 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: cimg/php:8.4-browsers
+      - image: cimg/mysql:9.5.0
+        environment:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_USER: admin
+          MYSQL_ROOT_PASSWORD: ''
+          MYSQL_DATABASE: admin
+
+    working_directory: ~/photos2youtube
+
+    steps:
+      - checkout
+      - run:
+          name: Setup environment
+          command: |
+            cp .env.example .env
+            npm install cross-env
+
+      - restore_cache:
+          keys:
+            - node-v1-{{ checksum "package-lock.json" }}
+            - node-v1-
+
+      - run: pwd && ls && npm install && npm run build
+
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: node-v1-{{ checksum "package-lock.json" }}
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "composer.json" }}
+            - v1-dependencies-
+
+      - run: composer install -n --prefer-dist
+
+      - save_cache:
+          paths:
+            - ./vendor
+          key: v1-dependencies-{{ checksum "composer.json" }}
+
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - photos2youtube
+
+  unit_test:
+    working_directory: ~/photos2youtube
+    docker:
+      - image: cimg/php:8.4
+    steps:
+      - attach_workspace:
+          at: ~/
+
+      - run:
+          name: Run Unit tests
+          command: |
+            XDEBUG_MODE=coverage ./vendor/bin/phpunit tests/Unit
+
+  deploy_staging:
+    docker:
+      - image: cimg/php:8.3
+    steps:
+      - checkout
+      - run:
+          name: Install Deployer
+          command: |
+            curl -LO https://deployer.org/deployer.phar
+            sudo mv deployer.phar /usr/local/bin/dep
+            sudo chmod +x /usr/local/bin/dep
+      - run:
+          name: Add SSH key to agent
+          command: |
+            ssh-agent
+            echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+            mkdir -p ~/.ssh
+            ssh-keyscan 3.0.189.57 >> ~/.ssh/known_hosts
+      - run:
+          name: Deploy to Staging
+          command: dep deploy staging --no-interaction
+
+workflows:
+  CI_CD:
+    jobs:
+      - build
+      - unit_test:
+          requires:
+            - build
+      - deploy_staging:
+          requires:
+            - unit_test
+          filters:
+            branches:
+              only: staging
