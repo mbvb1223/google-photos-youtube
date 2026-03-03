@@ -6,17 +6,18 @@
     <main class="flex-1 px-6 py-12 lg:py-24">
         <div class="max-w-3xl mx-auto">
             <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-4 tracking-tight">Terms of Service</h1>
-            <p class="text-slate-500 dark:text-slate-400 text-sm mb-12">Last updated: January 15, 2026</p>
+            <p class="text-slate-500 dark:text-slate-400 text-sm mb-12">Last updated: March 3, 2026</p>
 
             <div class="prose prose-slate dark:prose-invert max-w-none space-y-8 text-slate-600 dark:text-slate-400 leading-relaxed">
                 <section>
                     <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-3">1. Acceptance of Terms</h2>
-                    <p>By accessing or using Photos2Tube ("the Service"), you agree to be bound by these Terms of Service, our <a href="{{ route('privacy') }}" class="text-primary hover:underline">Privacy Policy</a>, the <a href="https://www.youtube.com/t/terms" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">YouTube Terms of Service</a>, and the <a href="https://policies.google.com/privacy" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>. If you do not agree to these terms, please do not use the Service.</p>
+                    <p>By accessing or using Photos2Tube ("the Service"), you agree to be bound by these Terms of Service, our <a href="{{ route('privacy') }}" class="text-primary hover:underline">Privacy Policy</a>, the <a href="https://www.youtube.com/t/terms" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">YouTube Terms of Service</a>, the <a href="https://developers.google.com/youtube/terms/api-services-terms-of-service" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">YouTube API Services Terms of Service</a>, and the <a href="https://policies.google.com/privacy" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>. If you do not agree to these terms, please do not use the Service.</p>
+                    <p class="mt-3">These Terms of Service are an agreement between you and Photos2Tube. They are not an agreement with Google, YouTube, or any of their affiliates.</p>
                 </section>
 
                 <section>
                     <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-3">2. Description of Service</h2>
-                    <p>Photos2Tube provides a tool that allows users to transfer videos from their Google Photos library to their YouTube channel. The Service acts as an intermediary, accessing your Google Photos and YouTube accounts via authorized Google OAuth 2.0 connections to facilitate video transfers.</p>
+                    <p>Photos2Tube provides a tool that allows users to transfer videos from their Google Photos library to their YouTube channel. The Service acts as an intermediary, accessing your Google Photos and YouTube accounts via authorized Google OAuth 2.0 connections to facilitate video transfers. Photos2Tube uses YouTube API Services for video uploads and playlist management, and the Google Photos Picker API for video selection.</p>
                 </section>
 
                 <section>
@@ -42,7 +43,7 @@
                     <p class="mt-3">You may revoke this authorization at any time by:</p>
                     <ul class="list-disc pl-6 space-y-2 mt-2">
                         <li>Disconnecting your accounts from the Photos2Tube dashboard.</li>
-                        <li>Removing Photos2Tube from your <a href="https://myaccount.google.com/permissions" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Google Account permissions page</a>.</li>
+                        <li>Removing Photos2Tube from your <a href="https://myaccount.google.com/permissions" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Google Account permissions page</a> or the <a href="https://security.google.com/settings/security/permissions" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Google Security Settings page</a>.</li>
                     </ul>
                 </section>
 
@@ -54,6 +55,10 @@
                         <li>You must have the legal right to upload any content you transfer through the Service.</li>
                         <li>Photos2Tube does not review, moderate, or take responsibility for content transferred through the Service.</li>
                     </ul>
+                    <div class="mt-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
+                        <p class="text-sm text-slate-700 dark:text-slate-300"><strong class="text-slate-900 dark:text-white">YouTube Upload Notice:</strong> By uploading content through Photos2Tube, you certify that the content you are uploading complies with the <a href="https://www.youtube.com/t/terms" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">YouTube Terms of Service</a> (including the <a href="https://www.youtube.com/howyoutubeworks/policies/community-guidelines/" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">YouTube Community Guidelines</a>). Please make sure that you do not violate others' copyright or privacy rights.</p>
+                    </div>
+                    <p class="mt-4">If any of your uploaded content is intended for children, you are responsible for designating it as "Made for Kids" on YouTube after the transfer is complete, in accordance with <a href="https://support.google.com/youtube/answer/9528076" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">YouTube's policies on children's content</a>.</p>
                 </section>
 
                 <section>
@@ -71,7 +76,7 @@
 
                 <section>
                     <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-3">7. Privacy and Data Use</h2>
-                    <p>Your use of the Service is also governed by our <a href="{{ route('privacy') }}" class="text-primary hover:underline">Privacy Policy</a>, which describes how we collect, use, and protect your data. By using the Service, you also acknowledge and agree to be bound by the <a href="https://policies.google.com/privacy" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>.</p>
+                    <p>Your use of the Service is also governed by our <a href="{{ route('privacy') }}" class="text-primary hover:underline">Privacy Policy</a>, which describes how we collect, use, and protect your data. By using the Service, you also acknowledge and agree to be bound by the <a href="https://policies.google.com/privacy" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>. If you are located in the European Union, your use of the Service is also subject to <a href="https://www.google.com/about/company/user-consent-policy/" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Google's EU User Consent Policy</a>.</p>
                 </section>
 
                 <section>
@@ -87,7 +92,7 @@
                 <section>
                     <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-3">10. Account Termination</h2>
                     <p class="mb-3">You may delete your account at any time from your profile settings. We reserve the right to suspend or terminate accounts that violate these terms or engage in prohibited uses.</p>
-                    <p>Upon termination, your stored data (including OAuth tokens, transfer history, and account information) will be permanently deleted from our systems.</p>
+                    <p>Upon termination, your stored data (including OAuth tokens, transfer history, and account information) will be permanently deleted from our systems. When you disconnect a Google account through Photos2Tube, all associated data is deleted within 7 calendar days. When you revoke access via Google Account settings, all associated data is deleted within 30 calendar days.</p>
                 </section>
 
                 <section>

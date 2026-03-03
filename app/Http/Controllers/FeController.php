@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ContactMessageRequest;
+use App\Models\ContactMessage;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class FeController extends Controller
@@ -26,6 +29,13 @@ class FeController extends Controller
     public function contact(): View
     {
         return view('fe.contact');
+    }
+
+    public function submitContact(ContactMessageRequest $request): RedirectResponse
+    {
+        ContactMessage::create($request->validated());
+
+        return redirect()->back()->with('success', 'Thank you for your message! We\'ll get back to you soon.');
     }
 
     public function privacy(): View

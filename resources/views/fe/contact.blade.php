@@ -14,19 +14,33 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
                 <!-- Left: Form -->
                 <div class="bg-white dark:bg-slate-900 p-8 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                    <form action="#" method="POST" class="space-y-6">
+                    @if (session('success'))
+                        <div class="mb-6 p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-300 text-sm font-medium">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    <form action="{{ route('contact.submit') }}" method="POST" class="space-y-6">
                         @csrf
                         <div>
                             <label class="block text-slate-900 dark:text-slate-100 text-sm font-semibold mb-2" for="name">Name</label>
-                            <input class="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 text-base focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-400" id="name" name="name" placeholder="Enter your full name" type="text"/>
+                            <input class="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 text-base focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-400 @error('name') border-red-500 dark:border-red-500 @enderror" id="name" name="name" placeholder="Enter your full name" type="text" value="{{ old('name') }}"/>
+                            @error('name')
+                                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div>
                             <label class="block text-slate-900 dark:text-slate-100 text-sm font-semibold mb-2" for="email">Email Address</label>
-                            <input class="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 text-base focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-400" id="email" name="email" placeholder="your@email.com" type="email"/>
+                            <input class="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 text-base focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-400 @error('email') border-red-500 dark:border-red-500 @enderror" id="email" name="email" placeholder="your@email.com" type="email" value="{{ old('email') }}"/>
+                            @error('email')
+                                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div>
                             <label class="block text-slate-900 dark:text-slate-100 text-sm font-semibold mb-2" for="message">Message</label>
-                            <textarea class="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 text-base focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-400 resize-none" id="message" name="message" placeholder="How can we help you?" rows="5"></textarea>
+                            <textarea class="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 text-base focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-400 resize-none @error('message') border-red-500 dark:border-red-500 @enderror" id="message" name="message" placeholder="How can we help you?" rows="5">{{ old('message') }}</textarea>
+                            @error('message')
+                                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                            @enderror
                         </div>
                         <button class="w-full bg-primary text-white font-bold py-4 rounded-lg hover:bg-primary/90 transition-all flex items-center justify-center gap-2 group" type="submit">
                             Send Message
