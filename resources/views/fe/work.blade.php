@@ -1,6 +1,6 @@
 @extends('fe.layouts.app')
 
-@section('title', 'Photo2Tube - From Photos to YouTube in One Click')
+@section('title', 'How It Works - Photos2Tube')
 
 @section('content')
     <main class="mx-auto max-w-7xl px-6 py-20">
@@ -63,15 +63,15 @@
         <div class="mt-32 rounded-3xl bg-primary px-8 py-16 text-center text-white md:px-16">
             <h2 class="mb-6 text-3xl font-extrabold md:text-4xl">Ready to sync your memories?</h2>
             <p class="mx-auto mb-10 max-w-xl text-lg text-white/80">
-                Join over 50,000 creators who save hours every week by automating their video publishing workflow.
+                Stop wasting time downloading and re-uploading. Transfer your Google Photos videos to YouTube in just a few clicks.
             </p>
             <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <button class="flex h-14 w-full items-center justify-center rounded-xl bg-white px-10 text-lg font-bold text-primary transition-all hover:bg-slate-50 hover:shadow-xl sm:w-auto">
-                    Connect Now
-                </button>
-                <button class="flex h-14 w-full items-center justify-center rounded-xl border-2 border-white/30 px-10 text-lg font-bold text-white transition-all hover:bg-white/10 sm:w-auto">
-                    View Demo
-                </button>
+                <a href="{{ route('register') }}" class="flex h-14 w-full items-center justify-center rounded-xl bg-white px-10 text-lg font-bold text-primary transition-all hover:bg-slate-50 hover:shadow-xl sm:w-auto">
+                    Get Started Free
+                </a>
+                <a href="{{ route('contact') }}" class="flex h-14 w-full items-center justify-center rounded-xl border-2 border-white/30 px-10 text-lg font-bold text-white transition-all hover:bg-white/10 sm:w-auto">
+                    Contact Us
+                </a>
             </div>
         </div>
     </main>

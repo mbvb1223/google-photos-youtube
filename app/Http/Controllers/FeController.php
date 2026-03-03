@@ -4,28 +4,27 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class FeController extends Controller
 {
-    public function index(Request $request): View
+    public function index(): View
     {
-        return view('fe/index');
+        return view('fe.index');
     }
 
-    public function work(Request $request): View
+    public function work(): View
     {
-        return view('fe/work');
+        return view('fe.work');
     }
 
-    public function pricing(Request $request): View
+    public function pricing(): View
     {
-        return view('fe/pricing');
+        return view('fe.pricing');
     }
 
-    public function contact(Request $request): View
+    public function contact(): View
     {
-        return view('fe/contact ');
+        return view('fe.contact');
     }
 }

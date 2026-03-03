@@ -2,16 +2,17 @@
 
 use App\Http\Controllers\Auth\GoogleConnectController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FeController;
 use App\Http\Controllers\PickerSessionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\YouTubeController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [\App\Http\Controllers\FeController::class, 'index']);
-Route::get('/how-it-works', [\App\Http\Controllers\FeController::class, 'work']);
-Route::get('/pricing', [\App\Http\Controllers\FeController::class, 'pricing']);
-Route::get('/contact', [\App\Http\Controllers\FeController::class, 'contact']);
+Route::get('/', [FeController::class, 'index'])->name('home');
+Route::get('/how-it-works', [FeController::class, 'work'])->name('how-it-works');
+Route::get('/pricing', [FeController::class, 'pricing'])->name('pricing');
+Route::get('/contact', [FeController::class, 'contact'])->name('contact');
 
 Route::get('/dashboard', DashboardController::class)
     ->middleware(['auth', 'verified'])

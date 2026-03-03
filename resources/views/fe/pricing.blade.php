@@ -1,6 +1,6 @@
 @extends('fe.layouts.app')
 
-@section('title', 'Photo2Tube - From Photos to YouTube in One Click')
+@section('title', 'Pricing - Photos2Tube')
 
 @section('content')
     <main class="flex-1 flex flex-col items-center py-16 px-6">
@@ -22,9 +22,9 @@
                     </div>
                     <p class="text-slate-500 text-sm mt-2">Perfect for trying out the sync service.</p>
                 </div>
-                <button class="w-full flex items-center justify-center rounded-lg h-12 px-4 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                <a href="{{ route('register') }}" class="w-full flex items-center justify-center rounded-lg h-12 px-4 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
                     Get Started
-                </button>
+                </a>
                 <div class="flex flex-col gap-4 pt-4 border-t border-slate-100 dark:border-slate-800">
                     <div class="text-sm flex gap-3 items-start">
                         <span class="material-symbols-outlined text-primary text-xl">check_circle</span>
@@ -57,9 +57,9 @@
                     </div>
                     <p class="text-slate-500 text-sm mt-2">For content creators and power users.</p>
                 </div>
-                <button class="w-full flex items-center justify-center rounded-lg h-12 px-4 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-all shadow-md shadow-primary/20">
+                <a href="{{ route('register') }}" class="w-full flex items-center justify-center rounded-lg h-12 px-4 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-all shadow-md shadow-primary/20">
                     Choose Pro Plan
-                </button>
+                </a>
                 <div class="flex flex-col gap-4 pt-4 border-t border-slate-100 dark:border-slate-800">
                     <div class="text-sm flex gap-3 items-start font-medium text-slate-900 dark:text-slate-100">
                         <span class="material-symbols-outlined text-primary text-xl">check_circle</span>
@@ -93,9 +93,9 @@
                     </div>
                     <p class="text-slate-500 text-sm mt-2">Custom solutions for large organizations.</p>
                 </div>
-                <button class="w-full flex items-center justify-center rounded-lg h-12 px-4 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-sm font-bold hover:opacity-90 transition-colors">
+                <a href="{{ route('contact') }}" class="w-full flex items-center justify-center rounded-lg h-12 px-4 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-sm font-bold hover:opacity-90 transition-colors">
                     Contact Sales
-                </button>
+                </a>
                 <div class="flex flex-col gap-4 pt-4 border-t border-slate-100 dark:border-slate-800">
                     <div class="text-sm flex gap-3 items-start">
                         <span class="material-symbols-outlined text-primary text-xl">check_circle</span>
