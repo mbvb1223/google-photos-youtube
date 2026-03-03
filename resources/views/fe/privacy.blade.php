@@ -85,7 +85,7 @@
 
                 <section>
                     <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-3">9. Contact Us</h2>
-                    <p>If you have questions about this Privacy Policy or your data, please contact us at <a href="mailto:pckhien@gmail.com" class="text-primary hover:underline">pckhien@gmail.com</a> or visit our <a href="{{ route('contact') }}" class="text-primary hover:underline">contact page</a>.</p>
+                    <p>If you have questions about this Privacy Policy or your data, please contact us at <a href="mailto:phamkhien2309@gmail.com" class="text-primary hover:underline">phamkhien2309@gmail.com</a> or visit our <a href="{{ route('contact') }}" class="text-primary hover:underline">contact page</a>.</p>
                 </section>
             </div>
         </div>
