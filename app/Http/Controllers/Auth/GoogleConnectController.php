@@ -44,7 +44,8 @@ class GoogleConnectController extends Controller
         $client->addScope('openid');
         $client->addScope('email');
         $client->addScope('profile');
-        $client->addScope('https://www.googleapis.com/auth/youtube');
+        $client->addScope('https://www.googleapis.com/auth/youtube.readonly');
+        $client->addScope('https://www.googleapis.com/auth/youtube.upload');
 
         $request->session()->put('google_auth_type', 'youtube');
 
