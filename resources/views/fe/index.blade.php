@@ -38,7 +38,7 @@
                             <div class="w-3 h-3 rounded-full bg-green-400"></div>
                         </div>
                         <div class="ml-4 px-3 py-1 rounded bg-slate-100 dark:bg-slate-800 text-[10px] text-slate-400 font-mono flex-1">
-                            photos2tube.com/dashboard
+                            https://photos2youtube.khien.io.vn/dashboard
                         </div>
                     </div>
                     <div class="w-full h-full pt-14 p-6 flex flex-col gap-6 bg-slate-50 dark:bg-slate-950/50">
