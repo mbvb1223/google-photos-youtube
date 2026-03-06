@@ -92,7 +92,7 @@
                     @endif
 
                     {{-- YouTube upload notice (required by YouTube API ToS Section 9.1.1) --}}
-                    <p class="mt-4 text-xs text-gray-400">By using Photos2Tube to upload content, you certify that it complies with the <a href="https://www.youtube.com/t/terms" class="text-indigo-600 hover:underline" target="_blank" rel="noopener noreferrer">YouTube Terms of Service</a> (including the <a href="https://www.youtube.com/howyoutubeworks/policies/community-guidelines/" class="text-indigo-600 hover:underline" target="_blank" rel="noopener noreferrer">Community Guidelines</a>). Please make sure that you do not violate others' copyright or privacy rights.</p>
+                    <p class="mt-4 text-xs text-gray-400">By using SocialTools to upload content, you certify that it complies with the <a href="https://www.youtube.com/t/terms" class="text-indigo-600 hover:underline" target="_blank" rel="noopener noreferrer">YouTube Terms of Service</a> (including the <a href="https://www.youtube.com/howyoutubeworks/policies/community-guidelines/" class="text-indigo-600 hover:underline" target="_blank" rel="noopener noreferrer">Community Guidelines</a>). Please make sure that you do not violate others' copyright or privacy rights.</p>
                 </div>
             </div>
 

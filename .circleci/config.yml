@@ -11,7 +11,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: ''
           MYSQL_DATABASE: admin
 
-    working_directory: ~/photos2youtube
+    working_directory: ~/socialtools
 
     steps:
       - checkout
@@ -52,10 +52,10 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - photos2youtube
+            - socialtools
 
   unit_test:
-    working_directory: ~/photos2youtube
+    working_directory: ~/socialtools
     docker:
       - image: cimg/php:8.4
     steps:
@@ -68,7 +68,7 @@ jobs:
             ./vendor/bin/pest
 
   deploy:
-    working_directory: ~/photos2youtube
+    working_directory: ~/socialtools
     docker:
       - image: cimg/php:8.4
     steps:
