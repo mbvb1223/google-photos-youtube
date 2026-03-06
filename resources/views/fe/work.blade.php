@@ -1,6 +1,6 @@
 @extends('fe.layouts.app')
 
-@section('title', 'How It Works - Photos2Tube')
+@section('title', 'How It Works - SocialTools')
 
 @section('content')
     <main class="mx-auto max-w-7xl px-6 py-20">

@@ -1,6 +1,6 @@
 @extends('fe.layouts.app')
 
-@section('title', 'Terms of Service - Photos2Tube')
+@section('title', 'Terms of Service - SocialTools')
 
 @section('content')
     <main class="flex-1 px-6 py-12 lg:py-24">
@@ -11,13 +11,13 @@
             <div class="prose prose-slate dark:prose-invert max-w-none space-y-8 text-slate-600 dark:text-slate-400 leading-relaxed">
                 <section>
                     <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-3">1. Acceptance of Terms</h2>
-                    <p>By accessing or using Photos2Tube ("the Service"), you agree to be bound by these Terms of Service, our <a href="{{ route('privacy') }}" class="text-primary hover:underline">Privacy Policy</a>, the <a href="https://www.youtube.com/t/terms" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">YouTube Terms of Service</a>, the <a href="https://developers.google.com/youtube/terms/api-services-terms-of-service" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">YouTube API Services Terms of Service</a>, and the <a href="https://policies.google.com/privacy" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>. If you do not agree to these terms, please do not use the Service.</p>
-                    <p class="mt-3">These Terms of Service are an agreement between you and Photos2Tube. They are not an agreement with Google, YouTube, or any of their affiliates.</p>
+                    <p>By accessing or using SocialTools ("the Service"), you agree to be bound by these Terms of Service, our <a href="{{ route('privacy') }}" class="text-primary hover:underline">Privacy Policy</a>, the <a href="https://www.youtube.com/t/terms" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">YouTube Terms of Service</a>, the <a href="https://developers.google.com/youtube/terms/api-services-terms-of-service" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">YouTube API Services Terms of Service</a>, and the <a href="https://policies.google.com/privacy" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>. If you do not agree to these terms, please do not use the Service.</p>
+                    <p class="mt-3">These Terms of Service are an agreement between you and SocialTools. They are not an agreement with Google, YouTube, or any of their affiliates.</p>
                 </section>
 
                 <section>
                     <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-3">2. Description of Service</h2>
-                    <p>Photos2Tube provides a tool that allows users to transfer videos from their Google Photos library to their YouTube channel. The Service acts as an intermediary, accessing your Google Photos and YouTube accounts via authorized Google OAuth 2.0 connections to facilitate video transfers. Photos2Tube uses YouTube API Services for video uploads and playlist management, and the Google Photos Picker API for video selection.</p>
+                    <p>SocialTools provides a tool that allows users to transfer videos from their Google Photos library to their YouTube channel. The Service acts as an intermediary, accessing your Google Photos and YouTube accounts via authorized Google OAuth 2.0 connections to facilitate video transfers. SocialTools uses YouTube API Services for video uploads and playlist management, and the Google Photos Picker API for video selection.</p>
                 </section>
 
                 <section>
@@ -33,7 +33,7 @@
 
                 <section>
                     <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-3">4. Google Account Authorization</h2>
-                    <p class="mb-3">By connecting your Google account, you authorize Photos2Tube to:</p>
+                    <p class="mb-3">By connecting your Google account, you authorize SocialTools to:</p>
                     <ul class="list-disc pl-6 space-y-2">
                         <li>Access your Google Photos library to browse and select videos via the Google Photos Picker API.</li>
                         <li>Download selected videos temporarily for the sole purpose of transferring them to YouTube.</li>
@@ -42,8 +42,8 @@
                     </ul>
                     <p class="mt-3">You may revoke this authorization at any time by:</p>
                     <ul class="list-disc pl-6 space-y-2 mt-2">
-                        <li>Disconnecting your accounts from the Photos2Tube dashboard.</li>
-                        <li>Removing Photos2Tube from your <a href="https://myaccount.google.com/permissions" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Google Account permissions page</a> or the <a href="https://security.google.com/settings/security/permissions" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Google Security Settings page</a>.</li>
+                        <li>Disconnecting your accounts from the SocialTools dashboard.</li>
+                        <li>Removing SocialTools from your <a href="https://myaccount.google.com/permissions" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Google Account permissions page</a> or the <a href="https://security.google.com/settings/security/permissions" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Google Security Settings page</a>.</li>
                     </ul>
                 </section>
 
@@ -53,10 +53,10 @@
                         <li>You retain all ownership rights to your videos and content.</li>
                         <li>You are solely responsible for the content you transfer, including ensuring it complies with <a href="https://www.youtube.com/t/terms" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">YouTube's Terms of Service</a> and <a href="https://www.youtube.com/howyoutubeworks/policies/community-guidelines/" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Community Guidelines</a>.</li>
                         <li>You must have the legal right to upload any content you transfer through the Service.</li>
-                        <li>Photos2Tube does not review, moderate, or take responsibility for content transferred through the Service.</li>
+                        <li>SocialTools does not review, moderate, or take responsibility for content transferred through the Service.</li>
                     </ul>
                     <div class="mt-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
-                        <p class="text-sm text-slate-700 dark:text-slate-300"><strong class="text-slate-900 dark:text-white">YouTube Upload Notice:</strong> By uploading content through Photos2Tube, you certify that the content you are uploading complies with the <a href="https://www.youtube.com/t/terms" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">YouTube Terms of Service</a> (including the <a href="https://www.youtube.com/howyoutubeworks/policies/community-guidelines/" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">YouTube Community Guidelines</a>). Please make sure that you do not violate others' copyright or privacy rights.</p>
+                        <p class="text-sm text-slate-700 dark:text-slate-300"><strong class="text-slate-900 dark:text-white">YouTube Upload Notice:</strong> By uploading content through SocialTools, you certify that the content you are uploading complies with the <a href="https://www.youtube.com/t/terms" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">YouTube Terms of Service</a> (including the <a href="https://www.youtube.com/howyoutubeworks/policies/community-guidelines/" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">YouTube Community Guidelines</a>). Please make sure that you do not violate others' copyright or privacy rights.</p>
                     </div>
                     <p class="mt-4">If any of your uploaded content is intended for children, you are responsible for designating it as "Made for Kids" on YouTube after the transfer is complete, in accordance with <a href="https://support.google.com/youtube/answer/9528076" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">YouTube's policies on children's content</a>.</p>
                 </section>
@@ -86,13 +86,13 @@
 
                 <section>
                     <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-3">9. Limitation of Liability</h2>
-                    <p>Photos2Tube is provided "as is" and "as available" without warranties of any kind, either express or implied. We are not liable for any damages arising from your use of the Service, including but not limited to data loss, failed transfers, or content removed by YouTube. Your use of the Service is at your sole risk.</p>
+                    <p>SocialTools is provided "as is" and "as available" without warranties of any kind, either express or implied. We are not liable for any damages arising from your use of the Service, including but not limited to data loss, failed transfers, or content removed by YouTube. Your use of the Service is at your sole risk.</p>
                 </section>
 
                 <section>
                     <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-3">10. Account Termination</h2>
                     <p class="mb-3">You may delete your account at any time from your profile settings. We reserve the right to suspend or terminate accounts that violate these terms or engage in prohibited uses.</p>
-                    <p>Upon termination, your stored data (including OAuth tokens, transfer history, and account information) will be permanently deleted from our systems. When you disconnect a Google account through Photos2Tube, all associated data is deleted within 7 calendar days. When you revoke access via Google Account settings, all associated data is deleted within 30 calendar days.</p>
+                    <p>Upon termination, your stored data (including OAuth tokens, transfer history, and account information) will be permanently deleted from our systems. When you disconnect a Google account through SocialTools, all associated data is deleted within 7 calendar days. When you revoke access via Google Account settings, all associated data is deleted within 30 calendar days.</p>
                 </section>
 
                 <section>

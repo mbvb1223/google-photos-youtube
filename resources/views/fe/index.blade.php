@@ -1,6 +1,6 @@
 @extends('fe.layouts.app')
 
-@section('title', 'Photos2Tube - From Photos to YouTube in One Click')
+@section('title', 'SocialTools - Transfer Videos Between Platforms')
 
 @section('content')
     <main class="flex-1 flex flex-col items-center justify-center px-6 py-12 lg:py-24 max-w-7xl mx-auto w-full">
@@ -38,7 +38,7 @@
                             <div class="w-3 h-3 rounded-full bg-green-400"></div>
                         </div>
                         <div class="ml-4 px-3 py-1 rounded bg-slate-100 dark:bg-slate-800 text-[10px] text-slate-400 font-mono flex-1">
-                            https://photos2youtube.khien.io.vn/dashboard
+                            https://social.khien.io.vn/dashboard
                         </div>
                     </div>
                     <div class="w-full h-full pt-14 p-6 flex flex-col gap-6 bg-slate-50 dark:bg-slate-950/50">

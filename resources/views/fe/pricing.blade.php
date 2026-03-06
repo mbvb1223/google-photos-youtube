@@ -1,6 +1,6 @@
 @extends('fe.layouts.app')
 
-@section('title', 'Pricing - Photos2Tube')
+@section('title', 'Pricing - SocialTools')
 
 @section('content')
     <main class="flex-1 flex flex-col items-center py-16 px-6">

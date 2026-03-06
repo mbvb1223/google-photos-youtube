@@ -3,7 +3,7 @@
 <html class="light" lang="en"><head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>@yield('title', 'Photos2Tube - From Photos to YouTube in One Click')</title>
+    <title>@yield('title', 'SocialTools - From Photos to YouTube in One Click')</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -40,8 +40,8 @@
 <div class="relative min-h-screen flex flex-col soft-gradient">
     <header class="w-full max-w-7xl mx-auto px-6 lg:px-10 py-6 flex items-center justify-between">
         <a href="{{ route('home') }}" class="flex items-center gap-2">
-            <img src="/logo.png" alt="Photos2Tube" class="h-12 w-auto"/>
-            <span class="text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100">Photos2Tube</span>
+            <img src="/logo.png" alt="SocialTools" class="h-12 w-auto"/>
+            <span class="text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100">SocialTools</span>
         </a>
         <nav class="hidden md:flex items-center gap-10">
             <a class="text-sm font-semibold transition-colors {{ request()->routeIs('how-it-works') ? 'text-primary' : 'text-slate-600 dark:text-slate-400 hover:text-primary' }}" href="{{ route('how-it-works') }}">How It Works</a>
@@ -66,8 +66,8 @@
                 <!-- Branding Column -->
                 <div class="col-span-1 md:col-span-1 flex flex-col gap-4">
                     <a href="{{ route('home') }}" class="flex items-center gap-2 group">
-                        <img src="/logo.png" alt="Photos2Tube" class="h-8 w-auto"/>
-                        <span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Photos2Tube</span>
+                        <img src="/logo.png" alt="SocialTools" class="h-8 w-auto"/>
+                        <span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">SocialTools</span>
                     </a>
                     <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed max-w-xs">
                         Transfer your Google Photos videos directly to YouTube. No downloads, no hassle.
@@ -110,7 +110,7 @@
             </div>
             <div class="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-6">
                 <p class="text-slate-500 dark:text-slate-400 text-sm">
-                    &copy; {{ date('Y') }} Photos2Tube. All rights reserved.
+                    &copy; {{ date('Y') }} SocialTools. All rights reserved.
                 </p>
                 <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm">
                     <span class="material-symbols-outlined text-sm">language</span>
