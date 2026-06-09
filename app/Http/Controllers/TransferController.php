@@ -40,7 +40,9 @@ class TransferController extends Controller
 
         $transfers = [];
 
-        foreach ($validated['videos'] as $video) {
+        $videos = collect($validated['videos'])->sortBy('title')->values()->all();
+
+        foreach ($videos as $video) {
             $transfer = $user->transfers()->create([
                 'google_photos_media_id' => $video['media_id'],
                 'google_photos_base_url' => $video['base_url'],
